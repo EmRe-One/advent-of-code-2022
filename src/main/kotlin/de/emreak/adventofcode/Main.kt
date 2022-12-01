@@ -21,7 +21,7 @@ fun main() {
 }
 
 fun solveDay1() {
-    val input = FileLoader.readLinesAsInts(filename = "day1.txt")
+    val input = FileLoader.readLines(filename = "day1.txt")
 
     val solution1 = Day1.part1(input)
     logger.info {"Solution1: $solution1" }
