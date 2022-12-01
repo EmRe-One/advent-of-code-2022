@@ -1,10 +1,8 @@
 # Advent-of-Code 2022
 
-| Info            | Badge                                                           |
-|-----------------|-----------------------------------------------------------------|
-| Written in      | ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin) |
-| Finish Level    | ![](https://img.shields.io/badge/📅%20days-0-blue)              |
-| Collected Stars | ![](https://img.shields.io/badge/⭐%20stars-0-green)             |
+![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
+![](https://img.shields.io/badge/📅%20days-1-005060?style=for-the-badge)
+![](https://img.shields.io/badge/⭐%20stars-2-005060?style=for-the-badge)
 
 ## Intro
 
