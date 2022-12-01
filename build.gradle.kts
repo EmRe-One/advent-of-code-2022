@@ -56,7 +56,7 @@ tasks {
 
 tasks.register("prepareNextDay") {
     doLast {
-        val nextDay = 0
+        val nextDay = 2
         val withTest = true
         val packageIdPath = "de.emreak.adventofcode".replace(".", "/")
 
@@ -79,14 +79,14 @@ tasks.register("prepareNextDay") {
                 file(mainFile).readText()
                     .replace(
                         "// $1", """
-                            $nextDay -> solveDay${nextDay}()
-                            // ${"$1"} 
-                        """.trimIndent()
+                            |       $nextDay -> solveDay${nextDay}()
+                            |       // ${"$1"} 
+                        """.trimMargin()
                     )
                     .replace(
                         "// $2", """
                         fun solveDay${nextDay}() {
-                            val input = AdventOfCodeUtils.readLines(filename = "day${nextDay}.txt")
+                            val input = FileLoader.readLines(filename = "day${nextDay}.txt")
     
                             val solution1 = Day${nextDay}.part1(input)
                             logger.info { "Solution1: ${"$"}solution1" }
@@ -103,10 +103,10 @@ tasks.register("prepareNextDay") {
             file(readmeFile).writeText(
                 file(readmeFile).readText()
                     .replace(
-                        "<!-- $1 -->",
-                        """| [Day ${nextDay}](https://adventofcode.com/2022/day/${nextDay}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/de/emreak/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/de/emreak/adventofcode/days/Day${nextDay}.kt) |       |       |
-${"<!-- $1 -->"}
-                        """.trimIndent()
+                        "<!-- $1 -->", """
+                            |[Day ${nextDay}](https://adventofcode.com/2022/day/${nextDay}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/de/emreak/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/de/emreak/adventofcode/days/Day${nextDay}.kt) |       |       |
+                            ${"<!-- $1 -->"}
+                        """.trimIntent()
                     )
             )
 
