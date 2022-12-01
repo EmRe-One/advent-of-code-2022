@@ -30,11 +30,11 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("org.slf4j:slf4j-api:2.0.3")
-    implementation("ch.qos.logback:logback-classic:1.4.4")
-    implementation("ch.qos.logback:logback-core:1.4.4")
+    implementation("org.slf4j:slf4j-api:2.0.5")
+    implementation("ch.qos.logback:logback-classic:1.4.5")
+    implementation("ch.qos.logback:logback-core:1.4.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
-    implementation("tr.emreone:kotlin-utils:0.0.1")
+    implementation("tr.emreone:kotlin-utils:0.0.3")
     testImplementation(kotlin("test"))
 }
 

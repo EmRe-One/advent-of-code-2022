@@ -1,12 +1,12 @@
-# Advent-of-Code 2022
-
 ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
 ![](https://img.shields.io/badge/📅%20days-1-005060?style=for-the-badge)
 ![](https://img.shields.io/badge/⭐%20stars-2-005060?style=for-the-badge)
 
+# Advent-of-Code 2022
+
 ## Intro
 
-[Homepage of Advent-of-Code 2022](https://adventofcode.com/2022)
+You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle solutions written in Kotlin.
 
 ## Solutions
 
