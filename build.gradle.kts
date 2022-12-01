@@ -86,7 +86,7 @@ tasks.register("prepareNextDay") {
                     .replace(
                         "// $2", """
                         fun solveDay${nextDay}() {
-                            val input = FileLoader.readLines(filename = "day${nextDay}.txt")
+                            val input = Resources.resourceAsList(fileName = "day${nextDay}.txt")
     
                             val solution1 = Day${nextDay}.part1(input)
                             logger.info { "Solution1: ${"$"}solution1" }
