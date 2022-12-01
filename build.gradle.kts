@@ -79,7 +79,7 @@ tasks.register("prepareNextDay") {
                 file(mainFile).readText()
                     .replace(
                         "// $1", """
-                            |       $nextDay -> solveDay${nextDay}()
+                            |        $nextDay -> solveDay${nextDay}()
                             |       // ${"$1"} 
                         """.trimMargin()
                     )
@@ -106,7 +106,7 @@ tasks.register("prepareNextDay") {
                         "<!-- $1 -->", """
                             |[Day ${nextDay}](https://adventofcode.com/2022/day/${nextDay}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/de/emreak/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/de/emreak/adventofcode/days/Day${nextDay}.kt) |       |       |
                             ${"<!-- $1 -->"}
-                        """.trimIntent()
+                        """.trimIndent()
                     )
             )
 

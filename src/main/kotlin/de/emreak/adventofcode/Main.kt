@@ -13,7 +13,7 @@ fun main() {
     when (day) {
         1 -> solveDay1()
         2 -> solveDay2()
-        // $1
+// $1
         else -> {
             throw IllegalArgumentException("Day $day is not implemented yet.")
         }
