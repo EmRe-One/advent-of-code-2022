@@ -26,6 +26,15 @@ class DaySolver {
         logger.info { "Solution2: $solution2" }
     }
 
+    fun solveDay03() {
+        val input = Resources.resourceAsList(fileName = "day03.txt")
+
+        val solution1 = Day03.part1(input)
+        logger.info { "Solution1: $solution1" }
+
+        val solution2 = Day03.part2(input)
+        logger.info { "Solution2: $solution2" }
+    }
 // $1
 
 }
