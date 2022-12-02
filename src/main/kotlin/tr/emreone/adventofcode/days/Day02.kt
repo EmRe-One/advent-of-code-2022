@@ -75,7 +75,7 @@ object Day02 {
         val rounds = parseRounds(input)
         return rounds.sumOf { round ->
             when (round.second) {
-                HandShape.ROCK     -> 0 + round.first.getShapeForLoose().score  // needs a loose
+                HandShape.ROCK     -> 0 + round.first.getShapeForLoose().score  // needs a lose
                 HandShape.PAPER    -> 3 + round.first.score                     // needs a draw
                 HandShape.SCISSORS -> 6 + round.first.getShapeForWin().score    // needs a win
             }
