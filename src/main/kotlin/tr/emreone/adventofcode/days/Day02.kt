@@ -1,77 +1,93 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
-
 object Day02 {
 
-    /* 1 for Rock          A  X
-     * 2 for Paper, and    B  Y
-     * 3 for Scissors      C  Z
-     *
-     * plus
-     *
-     * 0 if you lost
-     * 3 if the round was a draw, and
-     * 6 if you won
-     */
-    fun part1(input: List<String>): Int {
-        val rounds = input.map { round ->
-            val (a,b) = round.split(" ")
-            Pair(a.toCharArray().first() - 'A', b.toCharArray().first() - 'X')
+    /*
+    * Score is calculated by adding the score of shape with the score for the round
+    *
+    * 1 for Rock
+    * 2 for Paper, and
+    * 3 for Scissors
+    *
+    * plus
+    *
+    * 0 if you lost
+    * 3 if the round was a draw, and
+    * 6 if you won
+    */
+    enum class HandShape(
+        val score: Int
+    ) {
+        ROCK(1),
+        PAPER(2),
+        SCISSORS(3);
+
+        fun getShapeForWin(): HandShape {
+            return when (this) {
+                ROCK -> PAPER
+                PAPER -> SCISSORS
+                SCISSORS -> ROCK
+            }
         }
 
-        var totalScore = 0;
-        rounds.forEach { round ->
-            if ((round.first + 1) % 3  == round.second) {
-                totalScore += 6
+        fun getShapeForLoose(): HandShape {
+            return when (this) {
+                ROCK -> SCISSORS
+                PAPER -> ROCK
+                SCISSORS -> PAPER
             }
-            else if (round.second == round.first) {
-                totalScore += 3
-            }
-            totalScore += (round.second + 1)
         }
-        return totalScore
+
+        companion object {
+            fun parseFrom(char: Char): HandShape {
+                return when (char) {
+                    'A', 'X' -> ROCK
+                    'B', 'Y' -> PAPER
+                    'C', 'Z' -> SCISSORS
+                    else -> throw IllegalArgumentException("Shape must be A, B, C or X, Y, Z")
+                }
+            }
+        }
     }
 
-    /* 1 for Rock          A  X -> needs to lose
-     * 2 for Paper, and    B  Y -> needs a draw
-     * 3 for Scissors      C  Z -> needs a win
-     *
-     * plus
-     *
-     * 0 if you lost
-     * 3 if the round was a draw, and
-     * 6 if you won
-     */
-    fun part2(input: List<String>): Int {
-        val rounds = input.map { round ->
-            val (a,b) = round.split(" ")
-            Pair(a.toCharArray().first() - 'A', b.toCharArray().first() - 'X')
+    private fun parseRounds(input: List<String>) = input.map { round ->
+        val (player1, player2) = round.split(" ").map {
+            HandShape.parseFrom(it.first())
         }
+        player1 to player2
+    }
 
-        var totalScore = 0;
-        rounds.forEach { round ->
-            val currentScore = when (round.second) {
-                0 -> {
+
+    fun part1(input: List<String>): Int {
+        val rounds = parseRounds(input)
+
+        return rounds.sumOf { round ->
+            round.second.score + when (round.second) {
+                round.first.getShapeForWin() -> 6
+                round.first -> 3
+                else -> 0
+            }
+        }
+    }
+
+    fun part2(input: List<String>): Int {
+        val rounds = parseRounds(input)
+
+        return rounds.sumOf { round ->
+            when (round.second) {
+                HandShape.ROCK -> {
                     // needs to lose
-                    // -1 for losing symbol and +3 to avoid negativ values
-                    ((round.first - 1 + 3) % 3 + 1)
+                    0 + round.first.getShapeForLoose().score
                 }
-                1 -> {
+                HandShape.PAPER -> {
                     // needs a draw
-                    3 + (round.first + 1)
+                    3 + round.first.score
                 }
-                2 -> {
-                    6 + ((round.first + 1) % 3 + 1)
-                }
-                else -> {
-                    logger.error { "Invalid round: $round" }
-                    0
+                HandShape.SCISSORS -> {
+                    // needs to win
+                    6 + round.first.getShapeForWin().score
                 }
             }
-            totalScore += currentScore
         }
-
-        return totalScore
     }
 }
