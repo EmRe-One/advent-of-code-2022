@@ -4,41 +4,43 @@ import tr.emreone.adventofcode.days.*
 import tr.emreone.utils.Logger.logger
 import tr.emreone.utils.Resources
 
-fun main() {
+class DaySolver {
 
-    val day = 1
+    fun solveDay01() {
+        val input = Resources.resourceAsText(fileName = "day01.txt")
 
-    logger.info { "Day $day: " }
+        val solution1 = Day01.part1(input)
+        logger.info { "Solution1: $solution1" }
 
-    when (day) {
-        1 -> solveDay1()
-        2 -> solveDay2()
-// $1
-        else -> {
-            throw IllegalArgumentException("Day $day is not implemented yet.")
-        }
+        val solution2 = Day01.part2(input)
+        logger.info { "Solution2: $solution2" }
     }
 
-}
+    fun solveDay02() {
+        val input = Resources.resourceAsList(fileName = "day02.txt")
 
-fun solveDay1() {
-    val input = Resources.resourceAsText(fileName = "day1.txt")
+        val solution1 = Day02.part1(input)
+        logger.info { "Solution1: $solution1" }
 
-    val solution1 = Day1.part1(input)
-    logger.info { "Solution1: $solution1" }
-
-    val solution2 = Day1.part2(input)
-    logger.info { "Solution2: $solution2" }
-}
-
-fun solveDay2() {
-    val input = Resources.resourceAsList(fileName = "day2.txt")
-
-    val solution1 = Day2.part1(input)
-    logger.info { "Solution1: $solution1" }
-
-    val solution2 = Day2.part2(input)
-    logger.info { "Solution2: $solution2" }
-}
+        val solution2 = Day02.part2(input)
+        logger.info { "Solution2: $solution2" }
+    }
 
 // $2
+
+}
+
+fun main() {
+
+    val daySolver = DaySolver()
+    val day = 1
+    val dayString = day.toString().padStart(2, '0')
+    logger.info { "Day $dayString: " }
+
+    try {
+        val currentDay = daySolver.javaClass.getMethod("solveDay$dayString")
+        currentDay.invoke(daySolver)
+    } catch (e: Exception) {
+        logger.error { "Day $dayString is not implemented yet!" }
+    }
+}

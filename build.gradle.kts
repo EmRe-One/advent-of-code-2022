@@ -56,7 +56,7 @@ tasks {
 
 tasks.register("prepareNextDay") {
     doLast {
-        val nextDay = 2
+        val nextDay = "02"
         val withTest = true
         val packageIdPath = "tr.emreone.adventofcode".replace(".", "/")
 
@@ -79,12 +79,6 @@ tasks.register("prepareNextDay") {
                 file(mainFile).readText()
                     .replace(
                         "// $1", """
-                            |        $nextDay -> solveDay${nextDay}()
-                            |       // ${"$1"} 
-                        """.trimMargin()
-                    )
-                    .replace(
-                        "// $2", """
                         fun solveDay${nextDay}() {
                             val input = Resources.resourceAsList(fileName = "day${nextDay}.txt")
     

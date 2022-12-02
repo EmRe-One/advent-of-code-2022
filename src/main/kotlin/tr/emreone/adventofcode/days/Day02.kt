@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-object Day2 {
+object Day02 {
 
     fun part1(input: List<String>): Int {
 

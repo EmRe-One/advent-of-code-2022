@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-object Day1 {
+object Day01 {
 
     private fun collectCaloriesOfElves(input: String): List<Int> {
         return input.split("\n\n").map { elves ->
