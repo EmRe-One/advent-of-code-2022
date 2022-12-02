@@ -1,6 +1,6 @@
-package de.emreak.adventofcode
+package tr.emreone.adventofcode
 
-import de.emreak.adventofcode.days.*
+import tr.emreone.adventofcode.days.*
 import tr.emreone.utils.Logger.logger
 import tr.emreone.utils.Resources
 
@@ -25,10 +25,10 @@ fun solveDay1() {
     val input = Resources.resourceAsText(fileName = "day1.txt")
 
     val solution1 = Day1.part1(input)
-    logger.info {"Solution1: $solution1" }
+    logger.info { "Solution1: $solution1" }
 
     val solution2 = Day1.part2(input)
-    logger.info {"Solution2: $solution2" }
+    logger.info { "Solution2: $solution2" }
 }
 
 fun solveDay2() {

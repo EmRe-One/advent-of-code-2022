@@ -2,7 +2,7 @@ plugins {
     kotlin("jvm") version "1.7.20"
 }
 
-group = "de.emreak.adventofcode"
+group = "tr.emreone.adventofcode"
 version = "2022"
 
 fun getValue(key: String, filename: String = "keys.properties"): String {
@@ -58,7 +58,7 @@ tasks.register("prepareNextDay") {
     doLast {
         val nextDay = 2
         val withTest = true
-        val packageIdPath = "de.emreak.adventofcode".replace(".", "/")
+        val packageIdPath = "tr.emreone.adventofcode".replace(".", "/")
 
         val mainFile    = """$projectDir/src/main/kotlin/${packageIdPath}/Main.kt"""
         val readmeFile  = """$projectDir/README.md"""
@@ -104,7 +104,7 @@ tasks.register("prepareNextDay") {
                 file(readmeFile).readText()
                     .replace(
                         "<!-- $1 -->", """
-                            |[Day ${nextDay}](https://adventofcode.com/2022/day/${nextDay}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/de/emreak/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/de/emreak/adventofcode/days/Day${nextDay}.kt) |       |       |
+                            |[Day ${nextDay}](https://adventofcode.com/2022/day/${nextDay}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day${nextDay}.kt) |       |       |
                             ${"<!-- $1 -->"}
                         """.trimIndent()
                     )
