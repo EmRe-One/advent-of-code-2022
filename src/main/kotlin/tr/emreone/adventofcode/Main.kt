@@ -33,7 +33,7 @@ class DaySolver {
 fun main() {
 
     val daySolver = DaySolver()
-    val day = 1
+    val day = 2
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Day $dayString: " }
 
