@@ -26,7 +26,7 @@ class DaySolver {
         logger.info { "Solution2: $solution2" }
     }
 
-// $2
+// $1
 
 }
 
