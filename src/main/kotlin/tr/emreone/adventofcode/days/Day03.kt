@@ -2,13 +2,35 @@ package tr.emreone.adventofcode.days
 
 object Day03 {
 
-    fun part1(input: List<String>): Int {
+    // Lowercase item types a through z have priorities 1 through 26.
+    // Uppercase item types A through Z have priorities 27 through 52.
+    private fun getPriority(char: Char): Int {
+        return if (char.isLowerCase()) {
+            char - 'a'+ 1
+        } else {
+            char - 'A' + 27
+        }
+    }
 
-        return 0
+    fun part1(input: List<String>): Int {
+        val compartment = input.map {
+            it.substring(0, it.length/2) to it.substring(it.length/2, it.length)
+        }
+
+        return compartment.sumOf {
+            val (left, right) = it
+            val commonLetter = left.toSet().intersect(right.toSet()).first()
+
+            getPriority(commonLetter)
+        }
     }
 
     fun part2(input: List<String>): Int {
+        return input.chunked(3).sumOf {
+            val (first, second, third) = it
+            val commonLetter = first.toSet().intersect(second.toSet()).intersect(third.toSet()).first()
 
-        return 0
+            getPriority(commonLetter)
+        }
     }
 }
