@@ -56,7 +56,7 @@ tasks {
 
 tasks.register("prepareNextDay") {
     doLast {
-        val nextDay = "03"
+        val nextDay = "04"
         val withTest = true
         val packageIdPath = "tr.emreone.adventofcode".replace(".", "/")
 
