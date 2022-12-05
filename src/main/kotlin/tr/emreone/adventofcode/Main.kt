@@ -4,7 +4,7 @@ import tr.emreone.adventofcode.days.*
 import tr.emreone.utils.Logger.logger
 import tr.emreone.utils.Resources
 
-class DaySolver {
+class Solutions {
 
     fun solveDay01() {
         val input = Resources.resourceAsText(fileName = "day01.txt")
@@ -35,6 +35,7 @@ class DaySolver {
         val solution2 = Day03.part2(input)
         logger.info { "Solution2: $solution2" }
     }
+
     fun solveDay04() {
         val input = Resources.resourceAsList(fileName = "day04.txt")
 
@@ -44,21 +45,23 @@ class DaySolver {
         val solution2 = Day04.part2(input)
         logger.info { "Solution2: $solution2" }
     }
+
 // $1
 
 }
 
 fun main() {
 
-    val daySolver = DaySolver()
-    val day = 3
+    val solution = Solutions()
+    val day = 4
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Day $dayString: " }
 
     try {
-        val currentDay = daySolver.javaClass.getMethod("solveDay$dayString")
-        currentDay.invoke(daySolver)
+        val currentDay = solution.javaClass.getMethod("solveDay$dayString")
+        currentDay.invoke(solution)
     } catch (e: Exception) {
-        logger.error { "Day $dayString is not implemented yet!" }
+        e.printStackTrace()
+        logger.error { "Day $dayString is not implemented yet!"}
     }
 }

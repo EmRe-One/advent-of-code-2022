@@ -34,7 +34,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.4.5")
     implementation("ch.qos.logback:logback-core:1.4.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
-    implementation("tr.emreone:kotlin-utils:0.0.3")
+    implementation("tr.emreone:kotlin-utils:0.2.0")
     testImplementation(kotlin("test"))
 }
 
@@ -54,11 +54,20 @@ tasks {
     }
 }
 
+
 tasks.register("prepareNextDay") {
+    var day = 0
+    var packageId = ""
+
+    doFirst {
+        day = properties["day"]?.toString()?.toInt() ?: 0
+        packageId = properties["packageId"]?.toString() ?: "tr.emreone.adventofcode"
+    }
+
     doLast {
-        val nextDay = "04"
+        val nextDay = day.toString().padStart(2, '0')
         val withTest = true
-        val packageIdPath = "tr.emreone.adventofcode".replace(".", "/")
+        val packageIdPath = packageId.replace(".", "/")
 
         val mainFile    = "${projectDir}/src/main/kotlin/${packageIdPath}/Main.kt"
         val readmeFile  = "${projectDir}/README.md"
@@ -118,3 +127,8 @@ tasks.register("prepareNextDay") {
         }
     }
 }
+
+
+// tasks.register("aoc") {
+//     this.dependsOn("prepareNextDay")
+// }
