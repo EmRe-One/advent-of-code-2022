@@ -93,11 +93,8 @@ tasks.register("prepareNextDay") {
                         |    fun solveDay${nextDay}() {
                         |        val input = Resources.resourceAsList(fileName = "day${nextDay}.txt")
                         |
-                        |        val solution1 = Day${nextDay}.part1(input)
-                        |        logger.info { "Solution1: ${"$"}solution1" }
-                        |
-                        |        val solution2 = Day${nextDay}.part2(input)
-                        |        logger.info { "Solution2: ${"$"}solution2" }
+                        |        val solution1 = Day${nextDay}.part1(input); logger.info { "Solution1: ${"$"}solution1" }; 
+                        |        val solution2 = Day${nextDay}.part2(input); logger.info { "Solution2: ${"$"}solution2" }; 
                         |    }
                         |// ${"$1"}
                         """.trimMargin()
@@ -108,7 +105,7 @@ tasks.register("prepareNextDay") {
                 file(readmeFile).readText()
                     .replace(
                         "<!-- $1 -->", """
-                            |[Day ${nextDay}](https://adventofcode.com/2022/day/${nextDay}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day${nextDay}.kt) |       |       |
+                            |[Day ${nextDay}](https://adventofcode.com/2022/day/${day}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day${nextDay}.kt) |       |       |
                             ${"<!-- $1 -->"}
                         """.trimIndent()
                     )
