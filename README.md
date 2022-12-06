@@ -1,6 +1,6 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
-![](https://img.shields.io/badge/📅%20days-5-005060?style=for-the-badge)
-![](https://img.shields.io/badge/⭐%20stars-10-005060?style=for-the-badge)
+![](https://img.shields.io/badge/📅%20days-6-005060?style=for-the-badge)
+![](https://img.shields.io/badge/⭐%20stars-12-005060?style=for-the-badge)
 
 # Advent-of-Code 2022
 
@@ -17,5 +17,6 @@ You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle
 | [Day 03](https://adventofcode.com/2022/day/3) | [Day03Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day03Test.kt) | [Day03.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day03.kt) |   ⭐    |   ⭐    |
 | [Day 04](https://adventofcode.com/2022/day/4) | [Day04Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day04Test.kt) | [Day04.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day04.kt) |   ⭐    |   ⭐    |
 | [Day 05](https://adventofcode.com/2022/day/5) | [Day05Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day05Test.kt) | [Day05.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day05.kt) |   ⭐    |   ⭐    |
-| [Day 06](https://adventofcode.com/2022/day/6) | [Day06Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day06Test.kt) | [Day06.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day06.kt) |        |        |
+| [Day 06](https://adventofcode.com/2022/day/6) | [Day06Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day06Test.kt) | [Day06.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day06.kt) |   ⭐    |   ⭐    |
+| [Day 07](https://adventofcode.com/2022/day/7) | [Day07Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day07Test.kt) | [Day07.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day07.kt) |        |        |
 <!-- $1 -->
