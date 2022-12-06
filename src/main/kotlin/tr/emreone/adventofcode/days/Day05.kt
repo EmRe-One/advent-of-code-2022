@@ -58,7 +58,7 @@ object Day05 {
         return stackOfCrates to cratesLineIndex
     }
 
-    fun part1(input: List<String>): String {
+    private fun solveCrateMovements(input: List<String>, moveOneByOne: Boolean = true): String {
         val (stackOfCrates, startRow) = parseStackOfCrates(input)
 
         val pattern = "move (\\d+) from (\\d+) to (\\d+)".toRegex()
@@ -66,36 +66,30 @@ object Day05 {
         input.subList(startRow + 2, input.size).forEach {
             val (no, from, to) = pattern.matchEntire(it)!!.destructured
 
-            for (i in 0 until no.toInt()) {
-                stackOfCrates[to.toInt() - 1].push(stackOfCrates[from.toInt() - 1].pop())
+            if (moveOneByOne) {
+                for (i in 0 until no.toInt()) {
+                    stackOfCrates[to.toInt() - 1].push(stackOfCrates[from.toInt() - 1].pop())
+                }
+            }
+            else {
+                val temp = Stack<Char>()
+                for (i in 0 until no.toInt()) {
+                    temp.push(stackOfCrates[from.toInt() - 1].pop())
+                }
+                for (i in 0 until no.toInt()) {
+                    stackOfCrates[to.toInt() - 1].push(temp.pop())
+                }
             }
         }
 
-        var result = ""
-        stackOfCrates.forEach {
-            result += it.pop()
-        }
-        return result
+        return stackOfCrates.map { it.last() }.joinToString("")
+    }
+
+    fun part1(input: List<String>): String {
+        return solveCrateMovements(input, true)
     }
 
     fun part2(input: List<String>): String {
-        val (stackOfCrates, startRow) = parseStackOfCrates(input)
-
-        input.subList(startRow + 2, input.size).forEach {
-            val (no, from, to) = pattern.matchEntire(it)!!.destructured
-            val temp = Stack<Char>()
-            for (i in 0 until no.toInt()) {
-                temp.push(stackOfCrates[from.toInt() - 1].pop())
-            }
-            for (i in 0 until no.toInt()) {
-                stackOfCrates[to.toInt() - 1].push(temp.pop())
-            }
-        }
-
-        var result = ""
-        stackOfCrates.forEach {
-            result += it.pop()
-        }
-        return result
+        return solveCrateMovements(input, false)
     }
 }
