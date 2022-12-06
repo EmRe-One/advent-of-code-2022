@@ -44,8 +44,8 @@ class Solutions {
     fun solveDay06() {
         val input = Resources.resourceAsList(fileName = "day06.txt")
 
-        val solution1 = Day06.part1(input); logger.info { "Solution1: $solution1" }
-        val solution2 = Day06.part2(input); logger.info { "Solution2: $solution2" }
+        val solution1 = Day06.part1(input.first()); logger.info { "Solution1: $solution1" }
+        val solution2 = Day06.part2(input.first()); logger.info { "Solution2: $solution2" }
     }
 // $1
 
