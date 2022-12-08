@@ -53,6 +53,12 @@ class Solutions {
         val solution1 = Day07.part1(input); logger.info { "Solution1: $solution1" }; 
         val solution2 = Day07.part2(input); logger.info { "Solution2: $solution2" }; 
     }
+    fun solveDay08() {
+        val input = Resources.resourceAsList(fileName = "day08.txt")
+
+        val solution1 = Day08.part1(input); logger.info { "Solution1: $solution1" }; 
+        val solution2 = Day08.part2(input); logger.info { "Solution2: $solution2" }; 
+    }
 // $1
 
 }
