@@ -42,14 +42,10 @@ object Day08 {
             isOnTheEdge(input, it.key)
         }
 
-        trees.filter { !isOnTheEdge(input, it.key) }
-            .forEach { (t, u) ->
-
+        visibleTrees += trees.filter { !isOnTheEdge(input, it.key) }
+            .count { (t, u) ->
                 val current = input[t.second][t.first].digitToInt()
-
-                if (u.count { it.all { n -> n < current } } > 0) {
-                    visibleTrees += 1
-                }
+                u.count { it.all { n -> n < current } } > 0
             }
 
         return visibleTrees
@@ -58,10 +54,9 @@ object Day08 {
     fun part2(input: List<String>): Int {
 
         val trees = generateTreeMap(input)
-        val scoreMap = mutableMapOf<Coords, Int>()
 
-        trees.filter { !isOnTheEdge(input, it.key) }
-            .forEach { (t, u) ->
+        return trees.filter { !isOnTheEdge(input, it.key) }
+            .maxOf { (t, u) ->
                 val current = input[t.second][t.first].digitToInt()
 
                 var score = 1;
@@ -70,10 +65,7 @@ object Day08 {
                     score *= if (localStore == -1) it.size else localStore + 1
                 }
 
-                // logger.info { "scores of ($x,$y): top: $topScore, right: $rightScore, bottom: $bottomScore, left: $leftScore" }
-                scoreMap[t] = score
+                score
             }
-
-        return scoreMap.maxOf { it.value }
     }
 }
