@@ -28,13 +28,19 @@ object Day05 {
         return stack
     }
 
+
     //                    111111...
     // index:   0123456789012345...
+    //           ...............
     // crateId: [A]·[B]·[C]·[D]·...
     // crates:  ·1···2···3···4··...
     private fun parseStackOfCrates(input: List<String>): Pair<List<Stack<Char>>, Int> {
+        val stack1 = Stack<Char>()
+        val stack2 = Stack<Char>()
+
         val stackOfCrates = mutableListOf<Stack<Char>>()
         val indexLinePattern = "(\\s(\\d+)\\s?)+".toRegex()
+        // TODO replace with last line of header
 
         val cratesLineIndex = input.indexOfFirst { indexLinePattern.containsMatchIn(it) }
         indexLinePattern.findAll(input[cratesLineIndex]).forEach { _ ->
@@ -59,9 +65,8 @@ object Day05 {
     }
 
     private fun solveCrateMovements(input: List<String>, moveOneByOne: Boolean = true): String {
+        // TODO split text into header and movements
         val (stackOfCrates, startRow) = parseStackOfCrates(input)
-
-        val pattern = "move (\\d+) from (\\d+) to (\\d+)".toRegex()
 
         input.subList(startRow + 2, input.size).forEach {
             val (no, from, to) = pattern.matchEntire(it)!!.destructured

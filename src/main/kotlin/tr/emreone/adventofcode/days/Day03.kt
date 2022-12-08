@@ -6,19 +6,16 @@ object Day03 {
     // Uppercase item types A through Z have priorities 27 through 52.
     private fun getPriority(char: Char): Int {
         return if (char.isLowerCase()) {
-            char - 'a'+ 1
+            char - 'a' + 1
         } else {
             char - 'A' + 27
         }
     }
 
     fun part1(input: List<String>): Int {
-        val compartment = input.map {
-            it.substring(0, it.length/2) to it.substring(it.length/2, it.length)
-        }
-
-        return compartment.sumOf {
-            val (left, right) = it
+        return input.sumOf {
+            val (left, right) =
+                it.substring(0, it.length/2) to it.substring(it.length/2, it.length)
             val commonLetter = left.toSet().intersect(right.toSet()).first()
 
             getPriority(commonLetter)

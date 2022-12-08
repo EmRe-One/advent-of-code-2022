@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
+import java.util.*
 
 object Day04 {
 

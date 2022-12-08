@@ -3,9 +3,12 @@ package tr.emreone.adventofcode.days
 object Day06 {
 
     private fun indexOfMarkerWithNDistinctLetters(msg: String, n: Int): Int {
-        return msg.withIndex().windowed(n).indexOfFirst { a: List<IndexedValue<Char>> ->
-            a.map { it.value }.toSet().size == n
-        }
+        return msg
+            .withIndex()
+            .windowed(n)
+            .indexOfFirst { a: List<IndexedValue<Char>> ->
+                a.map { it.value }.toSet().size == n
+            }
     }
 
     fun part1(msg: String): Int {
