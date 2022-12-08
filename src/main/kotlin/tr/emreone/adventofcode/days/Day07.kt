@@ -1,10 +1,7 @@
 package tr.emreone.adventofcode.days
 
 import tr.emreone.utils.Logger.logger
-
-operator fun String.times(n: Int): String {
-    return this.repeat(n)
-}
+import tr.emreone.utils.extensions.times
 
 object Day07 {
 

@@ -1,6 +1,6 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
 ![](https://img.shields.io/badge/📅%20days-8-005060?style=for-the-badge)
-![](https://img.shields.io/badge/⭐%20stars-14-005060?style=for-the-badge)
+![](https://img.shields.io/badge/⭐%20stars-16-005060?style=for-the-badge)
 
 # Advent-of-Code 2022
 
@@ -19,5 +19,5 @@ You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle
 | [Day 05](https://adventofcode.com/2022/day/5) | [Day05Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day05Test.kt) | [Day05.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day05.kt) |   ⭐    |   ⭐    |
 | [Day 06](https://adventofcode.com/2022/day/6) | [Day06Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day06Test.kt) | [Day06.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day06.kt) |   ⭐    |   ⭐    |
 | [Day 07](https://adventofcode.com/2022/day/7) | [Day07Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day07Test.kt) | [Day07.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day07.kt) |   ⭐    |   ⭐    |
-| [Day 08](https://adventofcode.com/2022/day/8) | [Day08Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day08Test.kt) | [Day08.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day08.kt) |        |        |
+| [Day 08](https://adventofcode.com/2022/day/8) | [Day08Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day08Test.kt) | [Day08.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day08.kt) |   ⭐    |   ⭐    |
 <!-- $1 -->

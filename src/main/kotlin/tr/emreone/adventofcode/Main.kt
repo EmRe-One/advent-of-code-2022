@@ -66,7 +66,7 @@ class Solutions {
 fun main() {
 
     val solution = Solutions()
-    val day = 7
+    val day = 8
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Day $dayString: " }
 
@@ -75,6 +75,6 @@ fun main() {
         currentDay.invoke(solution)
     } catch (e: Exception) {
         e.printStackTrace()
-        logger.error { "Day $dayString is not implemented yet!"}
+        logger.error { "Day $dayString is not implemented yet!" }
     }
 }
