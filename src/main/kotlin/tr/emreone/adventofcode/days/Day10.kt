@@ -62,9 +62,8 @@ object Day10 {
         var cycle = 0
 
         fun drawPixel(cycle: Int, indexOfSprite: Int) {
-            val position = cycle - 1
-            val (x, y) = position % WIDTH_OF_CRT to position / WIDTH_OF_CRT
-            if ((position % WIDTH_OF_CRT) in ((indexOfSprite - 1)..(indexOfSprite + 1))) {
+            val (x, y) = cycle % WIDTH_OF_CRT to cycle / WIDTH_OF_CRT
+            if ((cycle % WIDTH_OF_CRT) in ((indexOfSprite - 1)..(indexOfSprite + 1))) {
                 crt[y][x] = '#'
             }
         }
@@ -74,14 +73,14 @@ object Day10 {
 
             when (operation.trim()) {
                 "noop" -> {
-                    cycle++
                     drawPixel(cycle, indexOfSprite)
+                    cycle++
                 }
                 "addx" -> {
-                    cycle++
                     drawPixel(cycle, indexOfSprite)
                     cycle++
                     drawPixel(cycle, indexOfSprite)
+                    cycle++
                     indexOfSprite += value.toInt()
                 }
             }
