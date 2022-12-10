@@ -38,8 +38,8 @@ object Day08 {
         val trees = generateTreeMap(input)
 
         // trees on the edge
-        var visibleTrees = trees.count {
-            isOnTheEdge(input, it.key)
+        var visibleTrees = trees.count {(key, _) ->
+            isOnTheEdge(input, key)
         }
 
         visibleTrees += trees.filter { !isOnTheEdge(input, it.key) }

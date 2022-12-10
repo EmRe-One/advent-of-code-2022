@@ -35,9 +35,6 @@ object Day05 {
     // crateId: [A]·[B]·[C]·[D]·...
     // crates:  ·1···2···3···4··...
     private fun parseStackOfCrates(input: List<String>): Pair<List<Stack<Char>>, Int> {
-        val stack1 = Stack<Char>()
-        val stack2 = Stack<Char>()
-
         val stackOfCrates = mutableListOf<Stack<Char>>()
         val indexLinePattern = "(\\s(\\d+)\\s?)+".toRegex()
         // TODO replace with last line of header

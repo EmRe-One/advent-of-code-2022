@@ -59,6 +59,18 @@ class Solutions {
         val solution1 = Day08.part1(input); logger.info { "Solution1: $solution1" }; 
         val solution2 = Day08.part2(input); logger.info { "Solution2: $solution2" }; 
     }
+    fun solveDay09() {
+        val input = Resources.resourceAsList(fileName = "day09.txt")
+
+        val solution1 = Day09.part1(input); logger.info { "Solution1: $solution1" }; 
+        val solution2 = Day09.part2(input); logger.info { "Solution2: $solution2" }; 
+    }
+    fun solveDay10() {
+        val input = Resources.resourceAsList(fileName = "day10.txt")
+
+        val solution1 = Day10.part1(input); logger.info { "Solution1: $solution1" }; 
+        val solution2 = Day10.part2(input); logger.info { "Solution2: $solution2" }; 
+    }
 // $1
 
 }
@@ -66,7 +78,7 @@ class Solutions {
 fun main() {
 
     val solution = Solutions()
-    val day = 8
+    val day = 9
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Day $dayString: " }
 
