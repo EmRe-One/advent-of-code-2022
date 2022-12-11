@@ -1,5 +1,6 @@
 package tr.emreone.adventofcode.days
 
+import tr.emreone.adventofcode.readTextGroups
 import tr.emreone.utils.Logger.logger
 import java.util.Stack
 
@@ -29,28 +30,25 @@ object Day05 {
     }
 
 
-    //                    111111...
-    // index:   0123456789012345...
-    //           ...............
-    // crateId: [A]·[B]·[C]·[D]·...
-    // crates:  ·1···2···3···4··...
-    private fun parseStackOfCrates(input: List<String>): Pair<List<Stack<Char>>, Int> {
+    //                         111111...
+    // index:        0123456789012345...
+    //               [Z]·········[C]·...
+    // distribution: [X]·[Y]·[A]·[B]·...
+    // cratesIds:    ·1···2···3···4··...
+    private fun parseStackOfCrates(input: List<String>): List<Stack<Char>> {
+        val cratesLine = input.last()
         val stackOfCrates = mutableListOf<Stack<Char>>()
-        val indexLinePattern = "(\\s(\\d+)\\s?)+".toRegex()
-        // TODO replace with last line of header
-
-        val cratesLineIndex = input.indexOfFirst { indexLinePattern.containsMatchIn(it) }
-        indexLinePattern.findAll(input[cratesLineIndex]).forEach { _ ->
+        """(\d+)""".toRegex().findAll(cratesLine).forEach { _ ->
             stackOfCrates.add(stackOf())
         }
 
-        for(i in (cratesLineIndex - 1) downTo 0) {
-            val currentLine = input[i]
-            val lineLength = currentLine.length
+        val stacksDistribution = input.dropLast(1).reversed()
+        stacksDistribution.forEach { row ->
+            val lineLength = row.length
             stackOfCrates.forEachIndexed { index, crate ->
                 val crateIdIndex = (index * 4) + 1
                 if (crateIdIndex < lineLength) {
-                    val crateId = currentLine[crateIdIndex]
+                    val crateId = row[crateIdIndex]
                     if (crateId != ' ') {
                         crate.push(crateId)
                     }
@@ -58,14 +56,16 @@ object Day05 {
             }
         }
 
-        return stackOfCrates to cratesLineIndex
+        return stackOfCrates
     }
 
-    private fun solveCrateMovements(input: List<String>, moveOneByOne: Boolean = true): String {
+    private fun solveCrateMovements(input: String, moveOneByOne: Boolean = true): String {
         // TODO split text into header and movements
-        val (stackOfCrates, startRow) = parseStackOfCrates(input)
+        val (header, movements) = input.readTextGroups()
 
-        input.subList(startRow + 2, input.size).forEach {
+        val stackOfCrates = parseStackOfCrates(header.lines())
+
+        movements.lines().forEach {
             val (no, from, to) = pattern.matchEntire(it)!!.destructured
 
             if (moveOneByOne) {
@@ -87,11 +87,11 @@ object Day05 {
         return stackOfCrates.map { it.last() }.joinToString("")
     }
 
-    fun part1(input: List<String>): String {
+    fun part1(input: String): String {
         return solveCrateMovements(input, true)
     }
 
-    fun part2(input: List<String>): String {
+    fun part2(input: String): String {
         return solveCrateMovements(input, false)
     }
 }

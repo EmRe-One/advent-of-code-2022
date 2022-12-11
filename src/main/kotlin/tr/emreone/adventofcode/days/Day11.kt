@@ -1,26 +1,8 @@
 package tr.emreone.adventofcode.days
 
-fun List<Long>.product(): Long = this.reduce { acc, i -> acc * i }
-
-infix fun Long.isDivisibleBy(divisor: Int): Boolean = this % divisor == 0L
-
-// greatest common divisor
-infix fun Long.gcd(other: Long): Long {
-    var a = this
-    var b = other
-    while (b != 0L) {
-        val temp = b
-        b = a % b
-        a = temp
-    }
-    return a
-}
-
-// least common multiple
-infix fun Long.lcm(other: Long): Long = (this * other) / (this gcd other)
-
-fun List<Long>.gcd(): Long = this.reduce(Long::gcd)
-fun List<Long>.lcm(): Long = this.reduce(Long::lcm)
+import tr.emreone.adventofcode.isDivisibleBy
+import tr.emreone.adventofcode.lcm
+import tr.emreone.adventofcode.product
 
 object Day11 {
 

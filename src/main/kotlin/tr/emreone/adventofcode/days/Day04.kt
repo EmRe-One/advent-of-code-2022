@@ -1,6 +1,7 @@
 package tr.emreone.adventofcode.days
 
-import java.util.*
+import tr.emreone.adventofcode.overlaps
+import tr.emreone.adventofcode.contains
 
 object Day04 {
 
@@ -11,14 +12,6 @@ object Day04 {
         val range2 = IntRange(c.toInt(), d.toInt())
 
         return range1 to range2
-    }
-
-    operator fun IntRange.contains(other: IntRange): Boolean {
-        return this.contains(other.first) && this.contains(other.last)
-    }
-
-    private infix fun IntRange.overlaps(other: IntRange): Boolean {
-        return this.first <= other.last && other.first <= this.last
     }
 
     fun part1(input: List<String>): Int {

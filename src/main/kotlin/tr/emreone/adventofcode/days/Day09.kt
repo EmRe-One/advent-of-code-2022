@@ -1,23 +1,10 @@
 package tr.emreone.adventofcode.days
 
+import tr.emreone.adventofcode.manhattanDistanceTo
+import tr.emreone.adventofcode.move
 import tr.emreone.utils.math.Point2D
-import kotlin.math.abs
 
 object Day09 {
-
-    fun Point2D.move(direction: String, distance: Int): Point2D {
-        return when (direction) {
-            "U" -> Point2D(x, y + distance)
-            "D" -> Point2D(x, y - distance)
-            "R" -> Point2D(x + distance, y)
-            "L" -> Point2D(x - distance, y)
-            else -> throw IllegalArgumentException("Unknown direction: $direction")
-        }
-    }
-
-    fun Point2D.manhattanDistanceTo(other: Point2D): Long {
-        return abs(x - other.x) + abs(y - other.y)
-    }
 
     private val PATTERN = """(\w+) (\d+)""".toRegex()
 
