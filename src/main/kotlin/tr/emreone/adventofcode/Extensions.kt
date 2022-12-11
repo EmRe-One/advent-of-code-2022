@@ -3,6 +3,10 @@ package tr.emreone.adventofcode
 import tr.emreone.utils.math.Point2D
 import kotlin.math.abs
 
+fun clearTerminal() {
+    print("""\033[0;0H\033[2J""")
+}
+
 fun String.readTextGroups(delimitter: String = "\n\n"): List<String> {
     return this.split(delimitter)
 }

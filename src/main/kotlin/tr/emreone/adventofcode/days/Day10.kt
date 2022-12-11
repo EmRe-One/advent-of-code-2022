@@ -1,22 +1,22 @@
 package tr.emreone.adventofcode.days
 
+import tr.emreone.adventofcode.clearTerminal
 import tr.emreone.utils.Logger.logger
 import java.lang.StringBuilder
 
 object Day10 {
 
-    val PATTERN = """(noop|addx\s)(-?\d+)?""".toRegex()
+    private val PATTERN = """(noop|addx\s)(-?\d+)?""".toRegex()
+
     // calculate signal strength at 20th, 60th, 100th, 140th, 180th, and 220th cycle
-
-
     fun part1(input: List<String>): Int {
         var registerValue = 1
         var cycle = 0
-        val signalStrenghs = mutableListOf<Int>()
+        val signalStrengths = mutableListOf<Int>()
 
         fun adjustSignalStrength(cycle: Int, registerValue: Int) {
             if (cycle in 20..220 step 40) {
-                signalStrenghs.add(cycle * registerValue)
+                signalStrengths.add(cycle * registerValue)
             }
         }
 
@@ -39,7 +39,7 @@ object Day10 {
             }
         }
 
-        return signalStrenghs.sumOf { it }
+        return signalStrengths.sumOf { it }
     }
 
     fun printCrt(input: Array<CharArray>) {
@@ -56,7 +56,7 @@ object Day10 {
     fun part2(input: List<String>): String {
         val WIDTH_OF_CRT = 40
         val HEIGHT_OF_CRT = 6
-        val crt = Array(HEIGHT_OF_CRT) { CharArray(WIDTH_OF_CRT) { '.' } }
+        val crt = Array(HEIGHT_OF_CRT) { CharArray(WIDTH_OF_CRT) { ' ' } }
 
         var indexOfSprite = 1
         var cycle = 0
@@ -84,10 +84,8 @@ object Day10 {
                     indexOfSprite += value.toInt()
                 }
             }
-
             // printCrt(crt)
         }
-
 
         val sb = StringBuilder()
         sb.appendLine()
