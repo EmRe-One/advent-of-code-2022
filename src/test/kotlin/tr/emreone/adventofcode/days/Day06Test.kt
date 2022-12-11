@@ -21,7 +21,7 @@ internal class Day06Test {
         val input = Resources.resourceAsList("day06_example.txt")
 
         input.forEachIndexed { index, value ->
-            val (msg, exp1, expected2) = value.split(" ")
+            val (msg, _, expected2) = value.split(" ")
             assertEquals(expected2.toInt(), Day06.part2(msg), "Day06, Part2:$index should be $expected2.")
         }
     }

@@ -21,7 +21,7 @@ object Day10 {
         }
 
         input.forEach { command ->
-            val (operation, value) = PATTERN.find(command)!!.destructured
+            val (operation, value) = PATTERN.matchEntire(command)!!.destructured
 
             when (operation.trim()) {
                 "noop" -> {
@@ -69,7 +69,7 @@ object Day10 {
         }
 
         input.forEach { command ->
-            val (operation, value) = PATTERN.find(command)!!.destructured
+            val (operation, value) = PATTERN.matchEntire(command)!!.destructured
 
             when (operation.trim()) {
                 "noop" -> {
