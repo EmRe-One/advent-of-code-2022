@@ -1,6 +1,6 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
-![](https://img.shields.io/badge/📅%20days-10-005060?style=for-the-badge)
-![](https://img.shields.io/badge/⭐%20stars-20-005060?style=for-the-badge)
+![](https://img.shields.io/badge/📅%20days-11-005060?style=for-the-badge)
+![](https://img.shields.io/badge/⭐%20stars-22-005060?style=for-the-badge)
 
 # Advent-of-Code 2022
 
@@ -23,4 +23,5 @@ You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle
 | [Day 09](https://adventofcode.com/2022/day/9)  | [Day09Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day09Test.kt) | [Day09.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day09.kt) |   ⭐    |   ⭐    |
 | [Day 10](https://adventofcode.com/2022/day/10) | [Day10Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day10Test.kt) | [Day10.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day10.kt) |   ⭐    |   ⭐    |
 | [Day 11](https://adventofcode.com/2022/day/11) | [Day11Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day11Test.kt) | [Day11.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day11.kt) |   ⭐    |   ⭐    |
+| [Day 12](https://adventofcode.com/2022/day/12) | [Day12Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day12Test.kt) | [Day12.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day12.kt) |        |        |
 <!-- $1 -->
