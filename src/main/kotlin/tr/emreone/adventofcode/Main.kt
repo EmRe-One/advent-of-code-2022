@@ -50,45 +50,44 @@ class Solutions {
     fun solveDay07() {
         val input = Resources.resourceAsList(fileName = "day07.txt")
 
-        val solution1 = Day07.part1(input); logger.info { "Solution1: $solution1" }; 
-        val solution2 = Day07.part2(input); logger.info { "Solution2: $solution2" }; 
+        val solution1 = Day07.part1(input); logger.info { "Solution1: $solution1" }
+        val solution2 = Day07.part2(input); logger.info { "Solution2: $solution2" }
     }
     fun solveDay08() {
         val input = Resources.resourceAsList(fileName = "day08.txt")
 
-        val solution1 = Day08.part1(input); logger.info { "Solution1: $solution1" }; 
-        val solution2 = Day08.part2(input); logger.info { "Solution2: $solution2" }; 
+        val solution1 = Day08.part1(input); logger.info { "Solution1: $solution1" }
+        val solution2 = Day08.part2(input); logger.info { "Solution2: $solution2" }
     }
     fun solveDay09() {
         val input = Resources.resourceAsList(fileName = "day09.txt")
 
-        val solution1 = Day09.part1(input); logger.info { "Solution1: $solution1" }; 
-        val solution2 = Day09.part2(input); logger.info { "Solution2: $solution2" }; 
+        val solution1 = Day09.part1(input); logger.info { "Solution1: $solution1" }
+        val solution2 = Day09.part2(input); logger.info { "Solution2: $solution2" }
     }
     fun solveDay10() {
         val input = Resources.resourceAsList(fileName = "day10.txt")
 
-        val solution1 = Day10.part1(input); logger.info { "Solution1: $solution1" }; 
-        val solution2 = Day10.part2(input); logger.info { "Solution2: $solution2" }; 
+        val solution1 = Day10.part1(input); logger.info { "Solution1: $solution1" }
+        val solution2 = Day10.part2(input); logger.info { "Solution2: $solution2" }
     }
     fun solveDay11() {
         val input = Resources.resourceAsText(fileName = "day11.txt")
 
-        val solution1 = Day11.part1(input); logger.info { "Solution1: $solution1" }; 
-        val solution2 = Day11.part2(input); logger.info { "Solution2: $solution2" }; 
+        val solution1 = Day11.part1(input); logger.info { "Solution1: $solution1" }
+        val solution2 = Day11.part2(input); logger.info { "Solution2: $solution2" }
     }
     fun solveDay12() {
         val input = Resources.resourceAsList(fileName = "day12.txt")
 
-        val solution1 = Day12.part1(input); logger.info { "Solution1: $solution1" }; 
-        val solution2 = Day12.part2(input); logger.info { "Solution2: $solution2" }; 
+        val solution1 = Day12.part1(input); logger.info { "Solution1: $solution1" }
+        val solution2 = Day12.part2(input); logger.info { "Solution2: $solution2" }
     }
 // $1
 
 }
 
 fun main() {
-
     val solution = Solutions()
     val day = 12
     val dayString = day.toString().padStart(2, '0')
