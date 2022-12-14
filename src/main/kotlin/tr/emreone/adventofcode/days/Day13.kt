@@ -101,6 +101,9 @@ object Day13 {
     }
 
     fun part2(input: String): Int {
+        val elemTwo = Packet.parse("[[2]]")
+        val elemSix = Packet.parse("[[6]]")
+
         val groups = input
             .lines()
             .filter {
@@ -109,12 +112,12 @@ object Day13 {
             .map { g ->
                 Packet.parse(g)
             }.toMutableList()
-        val elemTwo = Packet.parse("[[2]]")
-        val elemSix = Packet.parse("[[6]]")
+            .also {
+                it.add(elemTwo)
+                it.add(elemSix)
+            }
 
-        groups.add(elemTwo)
-        groups.add(elemSix)
-
+        // works, because Packets are Comparable
         groups.sort()
 
         val indexOfTwo = groups.indexOf(elemTwo) + 1
