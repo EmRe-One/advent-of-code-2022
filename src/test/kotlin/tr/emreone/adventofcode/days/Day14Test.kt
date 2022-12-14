@@ -9,7 +9,7 @@ internal class Day14Test {
     @Test
     fun part1() {
         val input = Resources.resourceAsList("day14_example.txt")
-        assertEquals(-1, Day14.part1(input), "Day14, Part1 should be -1.")
+        assertEquals(24, Day14.part1(input), "Day14, Part1 should be 24.")
     }
 
     @Test

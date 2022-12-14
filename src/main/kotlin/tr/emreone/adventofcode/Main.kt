@@ -101,7 +101,7 @@ class Solutions {
 
 fun main() {
     val solution = Solutions()
-    val day = 13
+    val day = 14
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Day $dayString: " }
 
