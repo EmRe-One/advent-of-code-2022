@@ -8,15 +8,14 @@ import java.lang.StringBuilder
 object Day14 {
 
     enum class MapElem(val symbol: Char) {
-        AIR('·'),
+        AIR(' '),
         START_SAND('+'),
         ROCK('#'),
-        SAND('o'),
+        SAND('·'),
         DROPPING_SAND('~')
     }
 
     class Terrain {
-        private val X_BORDER = 1000
         private val sandDropStartCoord = Point2D(500, 0)
         private var xMin = 500L
         private var xMax = 500L
@@ -25,7 +24,7 @@ object Day14 {
 
         var numberOfGrainOfSand = 0
         private var currentGrainOfSand: Point2D? = null
-        private lateinit var terrainMap: Array<Array<MapElem>>
+        private val terrainMap: MutableMap<Point2D, MapElem> = mutableMapOf()
         var infiniteDepth = true
 
         companion object {
@@ -55,24 +54,20 @@ object Day14 {
         }
 
         private fun setElemAtPoint(point: Point2D, elem: MapElem) {
-            this.terrainMap[(point.y - yMin).toInt() + 1][(point.x - xMin).toInt() + X_BORDER/2] = elem
+            this.terrainMap[point] = elem
+
+            // adjust boundaries
+            this.xMin = Long.min(this.xMin, point.x)
+            this.xMax = Long.max(this.xMax, point.x)
+            this.yMin = Long.min(this.yMin, point.y)
+            this.yMax = Long.max(this.yMax, point.y)
         }
+
         private fun getElemAtPoint(point: Point2D): MapElem {
-            return this.terrainMap
-                    .getOrNull((point.y - yMin).toInt() + 1)
-                    ?.getOrNull((point.x - xMin).toInt() + X_BORDER/2) ?: MapElem.AIR
+            return this.terrainMap[point] ?: MapElem.AIR
         }
 
         private fun initMap(rocks: List<Set<Point2D>>) {
-            this.xMin = Long.min(this.xMin, rocks.minOf { rock -> rock.minOf { it.x } })
-            this.xMax = Long.max(this.xMax, rocks.maxOf { rock -> rock.maxOf { it.x } })
-            this.yMin = Long.min(this.yMin, rocks.minOf { rock -> rock.minOf { it.y } })
-            this.yMax = Long.max(this.yMax, rocks.maxOf { rock -> rock.maxOf { it.y } })
-
-            terrainMap = Array((yMax - yMin).toInt() + 3) {
-                Array((xMax - xMin).toInt() + X_BORDER+1) { MapElem.AIR }
-            }
-
             rocks.forEach { rock ->
                 rock.forEach { point ->
                     setElemAtPoint(point, MapElem.ROCK)
@@ -82,52 +77,57 @@ object Day14 {
             setElemAtPoint(sandDropStartCoord, MapElem.START_SAND)
         }
 
+        fun prepareForPart2() {
+            this.infiniteDepth = false
+            this.yMax += 2
+        }
+
         fun tick(): Boolean {
             if (currentGrainOfSand == null) {
                 currentGrainOfSand = sandDropStartCoord
+
+                if (!this.infiniteDepth && getElemAtPoint(sandDropStartCoord) == MapElem.SAND) {
+                    return false
+                }
+
                 numberOfGrainOfSand++
             }
 
-            val nextPoint = Point2D(currentGrainOfSand!!.x, currentGrainOfSand!!.y + 1)
-            // as long as there is a sand corn smaller than yMax, sand drops
-            if (this.infiniteDepth) {
-                if (nextPoint.y > yMax) {
-                    numberOfGrainOfSand--
-                    return false
-                }
+            val southWest = Point2D(currentGrainOfSand!!.x - 1, currentGrainOfSand!!.y + 1)
+            val south = Point2D(currentGrainOfSand!!.x, currentGrainOfSand!!.y + 1)
+            val southEast = Point2D(currentGrainOfSand!!.x + 1, currentGrainOfSand!!.y + 1)
+
+            if (this.infiniteDepth && south.y > yMax) {
+                numberOfGrainOfSand--
+                return false
             }
-            else {
-                if (nextPoint.y > yMax) {
+            else if (!this.infiniteDepth) {
+                if (south.y == yMax) {
                     setElemAtPoint(currentGrainOfSand!!, MapElem.SAND)
                     currentGrainOfSand = null
                     return true
                 }
             }
 
-            if (getElemAtPoint(nextPoint) == MapElem.AIR) {
+            if (getElemAtPoint(south) == MapElem.AIR) {
                 setElemAtPoint(currentGrainOfSand!!, MapElem.AIR)
-                setElemAtPoint(nextPoint, MapElem.DROPPING_SAND)
-                currentGrainOfSand = nextPoint
-            }
-            else {
-                val downLeftPoint = Point2D(currentGrainOfSand!!.x - 1, currentGrainOfSand!!.y + 1)
-                val downRightPoint = Point2D(currentGrainOfSand!!.x + 1, currentGrainOfSand!!.y + 1)
-
-                if (getElemAtPoint(downLeftPoint) == MapElem.AIR) {
-                    setElemAtPoint(currentGrainOfSand!!, MapElem.AIR)
-                    setElemAtPoint(downLeftPoint, MapElem.DROPPING_SAND)
-                    currentGrainOfSand = downLeftPoint
-                }
-                else if (getElemAtPoint(downRightPoint) == MapElem.AIR) {
-                    setElemAtPoint(currentGrainOfSand!!, MapElem.AIR)
-                    setElemAtPoint(downRightPoint, MapElem.DROPPING_SAND)
-                    currentGrainOfSand = downRightPoint
-                }
-                else {
-                    setElemAtPoint(currentGrainOfSand!!, MapElem.SAND)
-                    currentGrainOfSand = null
-                    if (!infiniteDepth && currentGrainOfSand == sandDropStartCoord) {
-                        return false
+                setElemAtPoint(south, MapElem.DROPPING_SAND)
+                currentGrainOfSand = south
+            } else {
+                currentGrainOfSand = when (MapElem.AIR) {
+                    getElemAtPoint(southWest) -> {
+                        setElemAtPoint(currentGrainOfSand!!, MapElem.AIR)
+                        setElemAtPoint(southWest, MapElem.DROPPING_SAND)
+                        southWest
+                    }
+                    getElemAtPoint(southEast) -> {
+                        setElemAtPoint(currentGrainOfSand!!, MapElem.AIR)
+                        setElemAtPoint(southEast, MapElem.DROPPING_SAND)
+                        southEast
+                    }
+                    else -> {
+                        setElemAtPoint(currentGrainOfSand!!, MapElem.SAND)
+                        null
                     }
                 }
             }
@@ -137,9 +137,16 @@ object Day14 {
         fun print() {
             val sb = StringBuilder()
             sb.appendLine()
-            terrainMap.forEach { row ->
-                row.forEach { cell ->
-                    sb.append(cell.symbol)
+            for (y in (yMin - 1)..(yMax + 1)) {
+                if (!this.infiniteDepth && y == yMax) {
+                    for (x in (xMin - 1)..(xMax + 1)) {
+                        sb.append(MapElem.ROCK.symbol)
+                    }
+                }
+                else {
+                    for (x in (xMin - 1)..(xMax + 1)) {
+                        sb.append(getElemAtPoint(Point2D(x, y)).symbol)
+                    }
                 }
                 sb.appendLine()
             }
@@ -150,26 +157,22 @@ object Day14 {
     fun part1(input: List<String>): Int {
         val terrain = Terrain.parse(input)
 
-        // terrain.print()
         while (terrain.tick()) {
             // let the sand drop down
             // terrain.print()
         }
-        // terrain.print()
         return terrain.numberOfGrainOfSand
     }
 
     fun part2(input: List<String>): Int {
         val terrain = Terrain.parse(input)
-        terrain.infiniteDepth = false
+        terrain.prepareForPart2()
 
         while (terrain.tick()) {
             // let the sand drop down
             // terrain.print()
         }
 
-
         return terrain.numberOfGrainOfSand
-        return 0
     }
 }
