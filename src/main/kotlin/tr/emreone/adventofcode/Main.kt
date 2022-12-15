@@ -95,13 +95,19 @@ class Solutions {
         val solution1 = Day14.part1(input); logger.info { "Solution1: $solution1" }; 
         val solution2 = Day14.part2(input); logger.info { "Solution2: $solution2" }; 
     }
+    fun solveDay15() {
+        val input = Resources.resourceAsList(fileName = "day15.txt")
+
+        val solution1 = Day15.part1(input, 2_000_000L); logger.info { "Solution1: $solution1" };
+        val solution2 = Day15.part2(input, 0L, 4_000_000L); logger.info { "Solution2: $solution2" };
+    }
 // $1
 
 }
 
 fun main() {
     val solution = Solutions()
-    val day = 14
+    val day = 15
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Day $dayString: " }
 

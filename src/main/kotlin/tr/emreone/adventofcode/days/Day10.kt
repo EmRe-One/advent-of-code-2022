@@ -1,6 +1,5 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.adventofcode.clearTerminal
 import tr.emreone.utils.Logger.logger
 import java.lang.StringBuilder
 
