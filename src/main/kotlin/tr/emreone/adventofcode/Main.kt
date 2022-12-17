@@ -101,6 +101,18 @@ class Solutions {
         val solution1 = Day15.part1(input, 2_000_000L); logger.info { "Solution1: $solution1" };
         val solution2 = Day15.part2(input, 0L, 4_000_000L); logger.info { "Solution2: $solution2" };
     }
+    fun solveDay16() {
+        val input = Resources.resourceAsList(fileName = "day16.txt")
+
+        val solution1 = Day16.part1(input); logger.info { "Solution1: $solution1" }; 
+        val solution2 = Day16.part2(input); logger.info { "Solution2: $solution2" }; 
+    }
+    fun solveDay17() {
+        val input = Resources.resourceAsText(fileName = "day17.txt")
+
+        val solution1 = Day17.part1(input.trim()); logger.info { "Solution1: $solution1" };
+        val solution2 = Day17.part2(input.trim()); logger.info { "Solution2: $solution2" };
+    }
 // $1
 
 }
