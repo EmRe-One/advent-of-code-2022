@@ -1,120 +1,87 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.math.Coords
+import tr.emreone.utils.math.Point2D
 
 object Day12 {
 
-    data class Square(
-        var coord: Coords = Coords(-1, -1),
-        var signalStrength: Char = '·'
-    )
-
     class Area(private val width: Int, private val height: Int) {
-        private val squares = Array<Array<Square>>(height) { Array(width) { Square() } }
-        var startPosition = Square()
-        var endPosition = Square()
-        private val cache: MutableMap<Square, List<Square>?> = mutableMapOf()
+        val squares = Array<Array<Char>>(height) { Array(width) { ' ' } }
+        lateinit var startPosition: Point2D
+        lateinit var endPosition: Point2D
 
         fun parseSquares(rows: List<String>) {
             rows.forEachIndexed { y, row ->
                 row.forEachIndexed { x, char ->
-                    this.squares[y][x].coord = Coords(x, y)
-                    if (char == 'S') {
-                        this.squares[y][x].signalStrength = 'a'
-                        this.startPosition = this.squares[y][x]
-                    }
-                    else {
-                        this.squares[y][x].signalStrength = char
-                        if (char == 'E') {
-                            this.endPosition = this.squares[y][x]
+                    when(char) {
+                        'S' -> {
+                            this.squares[y][x] = 'a'
+                            startPosition = Point2D(x.toLong(), y.toLong())
+                        }
+                        'E' -> {
+                            this.squares[y][x] = 'z'
+                            endPosition = Point2D(x.toLong(), y.toLong())
+                        }
+                        else -> {
+                            this.squares[y][x] = char
                         }
                     }
                 }
             }
         }
 
-        private fun getSignalStrengthAt(square: Square): Char {
-            return this.squares[square.coord.second][square.coord.first].signalStrength
+        private fun getSignalStrengthAt(coord: Point2D): Char {
+            return this.squares[coord.y.toInt()][coord.x.toInt()]
         }
 
-        private fun getValidNeighbors(from: Square, ignoredSquares: List<Square>): List<Square> {
-            val neighbors = mutableListOf<Square>()
-            val (x, y) = from.coord
+        private fun getValidNeighbors(from: Point2D): List<Point2D> {
+            val neighbors = mutableListOf<Point2D>()
+            val (x, y) = from.x to from.y
 
-            if ((x - 1) in 0 until this.width) neighbors.add(this.squares[y][x - 1])
-            if ((x + 1) in 0 until this.width) neighbors.add(this.squares[y][x + 1])
-            if ((y - 1) in 0 until this.height) neighbors.add(this.squares[y - 1][x])
-            if ((y + 1) in 0 until this.height) neighbors.add(this.squares[y + 1][x])
+            if ((x - 1) in 0 until this.width) neighbors.add(Point2D(x - 1, y))
+            if ((x + 1) in 0 until this.width) neighbors.add(Point2D(x + 1, y))
+            if ((y - 1) in 0 until this.height) neighbors.add(Point2D(x, y - 1))
+            if ((y + 1) in 0 until this.height) neighbors.add(Point2D(x, y + 1))
 
             val currentSignalStrength = this.getSignalStrengthAt(from)
 
             return neighbors
                 .filter {
-                    val neighborStrength = this.getSignalStrengthAt(it)
-
-                    if (currentSignalStrength in arrayOf('y', 'z')) {
-                        neighborStrength in arrayOf('y', 'z', 'E')
-                    }
-                    else {
-                        neighborStrength in arrayOf(currentSignalStrength, currentSignalStrength + 1)
-                    }
+                    this.getSignalStrengthAt(it) <= currentSignalStrength + 1
                 }
-                .filter { !ignoredSquares.contains(it) }
         }
 
-        fun getShortestPathToE(
-            from: Square,
-            comingFrom: List<Square> = listOf(),
-        ): List<Square>? {
+        fun findSignalStrength(signalStrength: Char): List<Point2D> {
+            val result = mutableListOf<Point2D>()
 
-            if (getSignalStrengthAt(from) == 'E') {
-                return listOf(from)
-            }
-            if (this.cache.containsKey(from)) {
-                return this.cache[from]
-            }
-
-            // get neighbors with signalStrength plus 0 or 1
-            val neighbors = getValidNeighbors(from, comingFrom)
-
-            val listOfPossibleNeighbors = neighbors
-                .mapNotNull { neighbor ->
-                    getShortestPathToE(neighbor, comingFrom + from)
+            this.squares.forEachIndexed { y, row ->
+                row.forEachIndexed { x, char ->
+                    if (char == signalStrength) {
+                        result.add(Point2D(x.toLong(), y.toLong()))
+                    }
                 }
-
-            val shortestPath = listOfPossibleNeighbors.minByOrNull { it.size }
-
-            return if (shortestPath != null) {
-                val adjustedPath = listOf(from) + shortestPath
-                this.printPath(adjustedPath)
-                this.cache[from] = adjustedPath
-                adjustedPath
             }
-            else {
-                this.cache[from] = null
-                null
-            }
+
+            return result
         }
 
-        fun printPath(coords: List<Square>) {
-            val map = Array<Array<Char>>(height) { Array(width) { ' ' } }
-            val destination = coords.last()
-            coords.dropLast(1).forEachIndexed { index, pair ->
-                val neighbor = coords[index + 1]
-                val (x1, y1) = pair.coord
-                val (x2, y2) = neighbor.coord
-                when {
-                    x2 > x1 -> map[y1][x1] = '>'
-                    x2 < x1 -> map[y1][x1] = '<'
-                    y2 > y1 -> map[y1][x1] = 'v'
-                    y2 < y1 -> map[y1][x1] = '^'
-                }
+        fun bfs(queue: MutableList<Point2D>, target: Point2D): Int {
+            val dist = queue
+                .associateWith { 0 }
+                .toMutableMap()
+
+            while (queue.isNotEmpty()) {
+                val currentSquare = queue.removeFirst()
+
+                this.getValidNeighbors(currentSquare)
+                    .filter {
+                        !dist.contains(it)
+                    }
+                    .forEach {
+                        dist[it] = dist[currentSquare]!! + 1
+                        queue.add(it)
+                    }
             }
-            map[destination.coord.second][destination.coord.first] = getSignalStrengthAt(destination)
-            map.forEach { row ->
-                row.forEach { print(it) }
-                println()
-            }
+            return dist[target] ?: Int.MAX_VALUE
         }
     }
 
@@ -122,18 +89,15 @@ object Day12 {
         val area = Area(input.first().length, input.size)
         area.parseSquares(input)
 
-        val shortestPath = area.getShortestPathToE(area.startPosition)
-        return if (shortestPath != null) {
-            area.printPath(shortestPath)
-            shortestPath.size - 1
-        }
-        else {
-            -1
-        }
+        return area.bfs(mutableListOf(area.startPosition), area.endPosition)
     }
 
     fun part2(input: List<String>): Int {
+        val area = Area(input.first().length, input.size)
+        area.parseSquares(input)
 
-        return 0
+        return area.findSignalStrength('a').minOf { coord ->
+            area.bfs(mutableListOf(coord), area.endPosition)
+        }
     }
 }
