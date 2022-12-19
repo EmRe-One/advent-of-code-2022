@@ -5,7 +5,7 @@ import tr.emreone.utils.math.Point2D
 object Day12 {
 
     class Area(private val width: Int, private val height: Int) {
-        val squares = Array<Array<Char>>(height) { Array(width) { ' ' } }
+        private val squares = Array<Array<Char>>(height) { Array(width) { ' ' } }
         lateinit var startPosition: Point2D
         lateinit var endPosition: Point2D
 
@@ -64,7 +64,8 @@ object Day12 {
             return result
         }
 
-        fun bfs(queue: MutableList<Point2D>, target: Point2D): Int {
+        fun bfs(start: Point2D, target: Point2D): Int {
+            val queue = mutableListOf(start)
             val dist = queue
                 .associateWith { 0 }
                 .toMutableMap()
@@ -73,12 +74,12 @@ object Day12 {
                 val currentSquare = queue.removeFirst()
 
                 this.getValidNeighbors(currentSquare)
-                    .filter {
-                        !dist.contains(it)
+                    .filter {neighbor ->
+                        !dist.contains(neighbor)
                     }
-                    .forEach {
-                        dist[it] = dist[currentSquare]!! + 1
-                        queue.add(it)
+                    .forEach {neighbor ->
+                        dist[neighbor] = dist[currentSquare]!! + 1
+                        queue.add(neighbor)
                     }
             }
             return dist[target] ?: Int.MAX_VALUE
@@ -89,7 +90,7 @@ object Day12 {
         val area = Area(input.first().length, input.size)
         area.parseSquares(input)
 
-        return area.bfs(mutableListOf(area.startPosition), area.endPosition)
+        return area.bfs(area.startPosition, area.endPosition)
     }
 
     fun part2(input: List<String>): Int {
@@ -97,7 +98,7 @@ object Day12 {
         area.parseSquares(input)
 
         return area.findSignalStrength('a').minOf { coord ->
-            area.bfs(mutableListOf(coord), area.endPosition)
+            area.bfs(coord, area.endPosition)
         }
     }
 }
