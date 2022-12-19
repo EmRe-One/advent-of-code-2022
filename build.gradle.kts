@@ -94,8 +94,17 @@ tasks.register("prepareNextDay") {
                         |    fun solveDay${nextDay}() {
                         |        val input = Resources.resourceAsList(fileName = "day${nextDay}.txt")
                         |
-                        |        val solution1 = Day${nextDay}.part1(input); logger.info { "Solution1: ${"$"}solution1" }; 
-                        |        val solution2 = Day${nextDay}.part2(input); logger.info { "Solution2: ${"$"}solution2" }; 
+                        |        val (part1, elapsedTime1) = measureTimedValue {
+                        |            Day${nextDay}.part1(input)
+                        |        }
+                        |        logger.info { "Part1 solved in ${"$"}elapsedTime1:" }
+                        |        logger.info { part1 }
+                        |
+                        |        val (part2, elapsedTime2) = measureTimedValue {
+                        |            Day${nextDay}.part2(input)
+                        |        }
+                        |        logger.info { "Part2 solved in ${"$"}elapsedTime2:" }
+                        |        logger.info { part2 }
                         |    }
                         |// ${"$1"}
                         """.trimMargin()
@@ -106,7 +115,7 @@ tasks.register("prepareNextDay") {
                 file(readmeFile).readText()
                     .replace(
                         "<!-- $1 -->", """
-                            |[Day ${nextDay}](https://adventofcode.com/2022/day/${day}) | [Day${nextDay}Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day${nextDay}.kt) |       |       |
+                            | [Day ${nextDay}](https://adventofcode.com/2022/day/${day}) | [Day${nextDay}Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day${nextDay}Test.kt) | [Day${nextDay}.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day${nextDay}.kt) | ![Day ${nextDay}](./aoc_tiles/${nextDay}.png) |
                             ${"<!-- $1 -->"}
                         """.trimIndent()
                     )
