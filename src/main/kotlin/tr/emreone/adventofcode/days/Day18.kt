@@ -8,16 +8,16 @@ import kotlin.math.max
 
 object Day18 {
 
-    data class Cube(val center: Point3D, var isAir: Boolean = true) {
+    data class Cube(val center: Point3D) {
 
         fun possibleDirectNeighbors(): List<Cube> {
             return listOf(
-                Cube(Point3D(center.x - 1, center.y, center.z), false),
-                Cube(Point3D(center.x + 1, center.y, center.z), false),
-                Cube(Point3D(center.x, center.y - 1, center.z), false),
-                Cube(Point3D(center.x, center.y + 1, center.z), false),
-                Cube(Point3D(center.x, center.y, center.z - 1), false),
-                Cube(Point3D(center.x, center.y, center.z + 1), false)
+                Cube(Point3D(center.x - 1, center.y, center.z)),
+                Cube(Point3D(center.x + 1, center.y, center.z)),
+                Cube(Point3D(center.x, center.y - 1, center.z)),
+                Cube(Point3D(center.x, center.y + 1, center.z)),
+                Cube(Point3D(center.x, center.y, center.z - 1)),
+                Cube(Point3D(center.x, center.y, center.z + 1))
             )
         }
 
@@ -26,7 +26,7 @@ object Day18 {
     class Droplet(input: List<String>) {
         val cubes = input.map { line ->
             val (x, y, z) = line.split(",").map { it.toLong() }
-            Cube(Point3D(x, y, z), false)
+            Cube(Point3D(x, y, z))
         }
         private val outCubes = mutableSetOf<Cube>()
         private val inCubes = mutableSetOf<Cube>()
