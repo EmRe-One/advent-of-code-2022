@@ -1,140 +1,151 @@
 package tr.emreone.adventofcode.days
 
-import kotlin.math.max
-import kotlin.math.min
+import tr.emreone.utils.Logger.logger
 
 object Day17 {
-    val CHAMBER_WIDTH = 7
-    val OFFSET_X = 2
-    val OFFSET_Y = 3
+    private val CHAMBER_WIDTH = 7
+    private val START_OFFSET_X = 2
+    private val START_OFFSET_Y = 3
 
     class Shape(var shape: String) {
         var width = shape.lines().first().length
         var height = shape.lines().count()
     }
 
-    val SHAPES = arrayOf(
-        Shape("####"),
-        Shape(" # \n###\n # "),
-        Shape("###\n  #\n  #"),
-        Shape("#\n#\n#\n#"),
-        Shape("##\n##")
+    /*
+             ║     ║   ║
+     ════   ═╬═    ║   ║   ╔╗
+             ║   ══╝   ║   ╚╝
+                       ║
+     */
+    private val SHAPES = arrayOf(
+        Shape("----"),
+        Shape(" | \n-+-\n | "),
+        Shape("  |\n  |\n--J"),
+        Shape("|\n|\n|\n|"),
+        Shape("**\n**")
     )
 
-    fun part1(input: String, numberOfRocks: Int = 2022): Int {
-        var currentMovement = -1
-        val numberOfMovements = input.length
+    class Chamber() {
         var currentShapeIndex = -1
-        var chamber = mutableListOf<String>("=".repeat(CHAMBER_WIDTH))
+        var placedShapes = mutableListOf<String>()
 
-        fun printChamber() {
-            println("Chamber:")
-            chamber.reversed().forEach { println("|$it|") }
-            println()
+        fun nextShape(): Shape {
+            currentShapeIndex = (currentShapeIndex + 1) % SHAPES.size
+            return SHAPES[currentShapeIndex]
         }
 
-        fun moveShape(x: Int, y: Int, direction: Char, shape: Shape): Boolean {
-            when (direction) {
-                '>' -> {
-                    shape.shape.lines().forEachIndexed { s_y, line ->
-                        line.forEachIndexed { s_x, c ->
-                            if (c == '#') {
-                                if ((x + s_x + 1) >= CHAMBER_WIDTH
-                                    || (y + shape.height - s_y in chamber.indices
-                                            && chamber[y + shape.height - s_y][x + s_x + 1] != ' ')
-                                ) {
-                                    return false
-                                }
-                            }
-                        }
-                    }
-                }
-
-                '<' -> {
-                    shape.shape.lines().forEachIndexed { s_y, line ->
-                        line.forEachIndexed { s_x, c ->
-                            if (c == '#') {
-                                if ((x + s_x - 1) < 0
-                                    || (y + shape.height - s_y in chamber.indices
-                                            && chamber[y + shape.height - s_y][x + s_x - 1] != ' ')
-                                ) {
-                                    return false
-                                }
-                            }
-                        }
-                    }
-                }
-
-                'v' -> {
-                    shape.shape.lines().forEachIndexed { s_y, line ->
-                        line.forEachIndexed { s_x, c ->
-                            if (c == '#') {
-                                // Reach bottom
-                                if (y + shape.height - s_y - 1 < 0) {
-                                    return false
-                                }
-                                if (y + shape.height - s_y - 1 in chamber.indices
-                                    && chamber[y + shape.height - s_y - 1][x + s_x] != ' '
-                                ) {
-                                    return false
-                                }
-                            }
+        fun moveShapeLeft(x: Int, y: Int, shape: Shape): Pair<Int, Int> {
+            shape.shape.lines().reversed().forEachIndexed { s_y, line ->
+                line.forEachIndexed { s_x, c ->
+                    if (c != ' ') {
+                        if ((x + s_x - 1) < 0
+                            || (y + s_y in placedShapes.indices
+                                    && placedShapes[y + s_y][x + s_x - 1] != ' ')
+                        ) {
+                            return x to y
                         }
                     }
                 }
             }
-            return true
+
+            return (x - 1) to y
         }
 
-        repeat(numberOfRocks) {
-            currentShapeIndex = (currentShapeIndex + 1) % SHAPES.size
-            println("Shape: ${currentShapeIndex + 1}")
+        fun moveShapeRight(x: Int, y: Int, shape: Shape): Pair<Int, Int> {
+            shape.shape.lines().reversed().forEachIndexed { s_y, line ->
+                line.forEachIndexed { s_x, c ->
+                    if (c != ' ') {
+                        if ((x + s_x + 1) >= CHAMBER_WIDTH
+                            || (y + s_y in placedShapes.indices && placedShapes[y + s_y][x + s_x + 1] != ' ')
+                        ) {
+                            return x to y
+                        }
+                    }
+                }
+            }
 
-            val currentShape = SHAPES[currentShapeIndex]
-            var shapeX = OFFSET_X
-            var shapeY = chamber.size + OFFSET_Y
+            return (x + 1) to y
+        }
+
+        fun moveShapeDown(x: Int, y: Int, shape: Shape): Pair<Int, Int> {
+            shape.shape.reversed().lines().forEachIndexed { s_y, line ->
+                line.forEachIndexed { s_x, c ->
+                    if (c != ' ') {
+                        val checkY = y + s_y - 1
+                        if (checkY < 0 || (checkY in placedShapes.indices && placedShapes[checkY][x + s_x] != ' ')) {
+                            return x to y
+                        }
+                    }
+                }
+            }
+
+            return x to (y - 1)
+        }
+
+        fun placeShapeAt(x: Int, y: Int, shape: Shape) {
+            while (placedShapes.size < y + shape.height) {
+                placedShapes.add(" ".repeat(CHAMBER_WIDTH))
+            }
+            shape.shape.lines().reversed().forEachIndexed { s_y, line ->
+                line.forEachIndexed { s_x, c ->
+                    if (c != ' ') {
+                        placedShapes[y + s_y] = placedShapes[y + s_y]
+                            .replaceRange(x + s_x, x + s_x + 1, c.toString())
+                    }
+                }
+            }
+        }
+
+        fun printChamber() {
+            placedShapes.reversed().forEach { logger.info { "|$it|" } }
+            logger.info { "|" + "=".repeat(CHAMBER_WIDTH) + "|" }
+        }
+    }
+
+    fun part1(input: String, numberOfRocks: Int = 2022): Int {
+        val chamber = Chamber()
+        var currentMovementIndex = -1
+        val numberOfMovements = input.length
+
+        repeat(numberOfRocks) {
+            val currentShape = chamber.nextShape()
+
+            var shapeX = START_OFFSET_X
+            var shapeY = chamber.placedShapes.size + START_OFFSET_Y
 
             while (true) {
                 // next movement
-                currentMovement = (currentMovement + 1) % numberOfMovements
-                println("Movement: ${input[currentMovement]}")
-                when (input[currentMovement]) {
+                currentMovementIndex = (currentMovementIndex + 1) % numberOfMovements
+                val nextMovement = input[currentMovementIndex]
+
+                when (nextMovement) {
                     '<' -> {
-                        if (moveShape(shapeX, shapeY, input[currentMovement], currentShape)) {
-                            shapeX--
-                            println("Moved left to $shapeX, $shapeY")
-                        }
+                        val (newX, _) = chamber.moveShapeLeft(shapeX, shapeY, currentShape)
+                        shapeX = newX
+                        logger.debug { "Move left to $shapeX, $shapeY" }
                     }
 
                     '>' -> {
-                        if (moveShape(shapeX, shapeY, input[currentMovement], currentShape)) {
-                            shapeX++
-                            println("Moved right to $shapeX, $shapeY")
-                        }
+                        val (newX, _) = chamber.moveShapeRight(shapeX, shapeY, currentShape)
+                        shapeX = newX
+                        logger.debug { "Move right to $shapeX, $shapeY" }
                     }
                 }
 
-                if (!moveShape(shapeX, shapeY, 'v', currentShape)) {
-                    while (chamber.size < shapeY + currentShape.height) {
-                        chamber.add(" ".repeat(CHAMBER_WIDTH))
-                    }
-                    currentShape.shape.lines().forEachIndexed { s_y, line ->
-                        line.forEachIndexed { s_x, c ->
-                            if (c == '#') {
-                                chamber[shapeY + s_y] = chamber[shapeY + s_y]
-                                    .replaceRange(shapeX + s_x, shapeX + s_x + 1, "#")
-                            }
-                        }
-                    }
+                val (_, newY) = chamber.moveShapeDown(shapeX, shapeY, currentShape)
+                if (newY == shapeY) {
+                    chamber.placeShapeAt(shapeX, shapeY, currentShape)
                     break
                 } else {
-                    shapeY--
-                    println("Moved down to $shapeX, $shapeY")
+                    shapeY = newY
+                    logger.debug { "Move down to $shapeX, $shapeY" }
                 }
             }
-            printChamber()
         }
-        return chamber.size
+
+        // chamber.printChamber()
+        return chamber.placedShapes.size
     }
 
     fun part2(input: String): Int {

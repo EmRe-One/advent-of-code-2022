@@ -283,7 +283,7 @@ class Solutions {
         val input = Resources.resourceAsText(fileName = "day17.txt")
 
         val (part1, elapsedTime1) = measureTimedValue {
-            Day17.part1(input.trim());
+            Day17.part1(input.trim(), 2022)
         }
         logger.info { "Part1 solved in $elapsedTime1:" }
         logger.info { part1 }
@@ -315,7 +315,7 @@ class Solutions {
 
 fun main() {
     val solution = Solutions()
-    val day = 18
+    val day = 17
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Solving Puzzles for Day $dayString: " }
 
