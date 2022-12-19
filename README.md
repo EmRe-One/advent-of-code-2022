@@ -1,6 +1,6 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
-![](https://img.shields.io/badge/📅%20days-14-005060?style=for-the-badge)
-![](https://img.shields.io/badge/⭐%20stars-28-005060?style=for-the-badge)
+![](https://img.shields.io/badge/📅%20days-18-005060?style=for-the-badge)
+![](https://img.shields.io/badge/⭐%20stars-36-005060?style=for-the-badge)
 
 # Advent-of-Code 2022
 
@@ -27,7 +27,7 @@ You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle
 | [Day 13](https://adventofcode.com/2022/day/13) | [Day13Test.kt](./blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day13Test.kt) | [Day13.kt](./blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day13.kt) | ![Day 13](./aoc_tiles/13.png) |
 | [Day 14](https://adventofcode.com/2022/day/14) | [Day14Test.kt](./blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day14Test.kt) | [Day14.kt](./blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day14.kt) | ![Day 14](./aoc_tiles/14.png) |
 | [Day 15](https://adventofcode.com/2022/day/15) | [Day15Test.kt](./blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day15Test.kt) | [Day15.kt](./blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day15.kt) | ![Day 15](./aoc_tiles/15.png) |
-|[Day 16](https://adventofcode.com/2022/day/16) | [Day16Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day16Test.kt) | [Day16.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day16.kt) |       |       |
-|[Day 17](https://adventofcode.com/2022/day/17) | [Day17Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day17Test.kt) | [Day17.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day17.kt) |       |       |
-|[Day 18](https://adventofcode.com/2022/day/18) | [Day18Test.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day18Test.kt) | [Day18.kt](https://github.com/EmRe-One/advent-of-code-2022/blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day18.kt) |       |       |
+| [Day 16](https://adventofcode.com/2022/day/16) | [Day16Test.kt](./blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day16Test.kt) | [Day16.kt](./blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day16.kt) | ![Day 16](./aoc_tiles/16.png) |       |
+| [Day 17](https://adventofcode.com/2022/day/17) | [Day17Test.kt](./blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day17Test.kt) | [Day17.kt](./blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day17.kt) | ![Day 17](./aoc_tiles/17.png) |       |
+| [Day 18](https://adventofcode.com/2022/day/18) | [Day18Test.kt](./blob/master/src/test/kotlin/tr/emreone/adventofcode/days/Day18Test.kt) | [Day18.kt](./blob/master/src/main/kotlin/tr/emreone/adventofcode/days/Day18.kt) | ![Day 18](./aoc_tiles/18.png) |       |
 <!-- $1 -->
