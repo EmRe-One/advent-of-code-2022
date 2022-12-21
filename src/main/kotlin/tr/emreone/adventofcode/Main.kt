@@ -313,7 +313,7 @@ class Solutions {
         val input = Resources.resourceAsList(fileName = "day19.txt")
 
         val (part1, elapsedTime1) = measureTimedValue {
-            Day19.part1(input)
+            Day19.part1(input, 24)
         }
         logger.info { "Part1 solved in $elapsedTime1:" }
         logger.info { part1 }

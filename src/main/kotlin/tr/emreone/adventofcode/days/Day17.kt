@@ -99,7 +99,7 @@ object Day17 {
 
         fun printChamber() {
             placedShapes.reversed().forEach { logger.info { "|$it|" } }
-            logger.info { "|" + "=".repeat(CHAMBER_WIDTH) + "|" }
+            logger.info { "+" + "-".repeat(CHAMBER_WIDTH) + "+" }
         }
     }
 
@@ -148,8 +148,11 @@ object Day17 {
         return chamber.placedShapes.size
     }
 
-    fun part2(input: String): Int {
+    fun part2(input: String, numberOfRocks: Long = 1_000_000_000_000L): Long {
+        val chamber = Chamber()
+        var currentMovementIndex = -1
+        val numberOfMovements = input.length
 
-        return 0
+        return -1L
     }
 }
