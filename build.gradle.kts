@@ -35,6 +35,7 @@ dependencies {
     implementation("ch.qos.logback:logback-core:1.4.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.mariuszgromada.math:MathParser.org-mXparser:5.1.0")
     implementation("tr.emreone:kotlin-utils:0.2.0")
     testImplementation(kotlin("test"))
 }

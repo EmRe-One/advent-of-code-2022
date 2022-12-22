@@ -1,40 +1,22 @@
 package tr.emreone.adventofcode.days
 
+import org.mariuszgromada.math.mxparser.Expression
+import kotlin.math.roundToLong
+
 object Day21 {
 
     val MONKEY_VALUE_PATTERN = """(\w+): (\d+)""".toRegex()
-    val MONKEY_EQ_PATTERN = """(\w+): (\w+) (\*|\/|\+|\-) (\w+)""".toRegex()
+    val MONKEY_EQ_PATTERN = """(\w+): (\w+) ([*/+\-]) (\w+)""".toRegex()
 
     class RootCalculator() {
         val allMonkeys: MutableMap<String, Monkey> = mutableMapOf()
 
-        val monkeysWithUnknownValues: MutableMap<String, Monkey> = mutableMapOf()
-        val monkeysWithKnownValues: MutableMap<String, Monkey> = mutableMapOf()
+        fun calculateMonkeyWithId(id: String): Long {
+            val monkey = allMonkeys[id]!!
+            monkey.value?.let { return it }
 
-        fun resolveEquations() {
-            while(this.monkeysWithUnknownValues.isNotEmpty()) {
-                val id = this.monkeysWithUnknownValues.firstNotNullOfOrNull { (id, monkey) ->
-                    if (this.evaluateFor(id)) {
-                        id
-                    } else {
-                        null
-                    }
-                }
-                if (id != null) {
-                    val monkey = this.monkeysWithUnknownValues.remove(id)
-                    this.monkeysWithKnownValues[id] = monkey!!
-                }
-            }
-        }
-
-        fun evaluateFor(id: String): Boolean {
-            val monkey = monkeysWithUnknownValues[id]!!
-            val left = monkey.waitFor?.first?.let { monkeysWithKnownValues[it] }?.value
-            val right = monkey.waitFor?.second?.let { monkeysWithKnownValues[it] }?.value
-
-            if (left == null || right == null) {
-                return false
-            }
+            val left = calculateMonkeyWithId(monkey.waitFor!!.first)
+            val right = calculateMonkeyWithId(monkey.waitFor.second)
 
             monkey.value = when (monkey.operation) {
                 '+' -> left + right
@@ -42,27 +24,28 @@ object Day21 {
                 '*' -> left * right
                 '/' -> left / right
                 '=' -> if (left == right) 1L else 0L
-                else -> return false
+                else -> throw UnsupportedOperationException()
             }
-            return true
+            return monkey.value!!
         }
 
-        fun valueOf(id: String): Long? {
-            return monkeysWithKnownValues[id]?.value
-        }
+        fun buildEquationForMonkeyWithId(y: String, x: String): String {
+            val monkey = allMonkeys[y]!!
 
-        fun resetMonkeys() {
-            monkeysWithUnknownValues.clear()
-            monkeysWithKnownValues.clear()
+            monkey.value?.let { return "${monkey.value}" }
 
-            allMonkeys.forEach { (key, monkey) ->
-                monkey.reset()
-                if (monkey.value != null) {
-                    monkeysWithKnownValues[key] = monkey
-                } else {
-                    monkeysWithUnknownValues[key] = monkey
-                }
+            val (left, right) = monkey.waitFor!!
+
+            var leftEquation = if (left == x) "x" else buildEquationForMonkeyWithId(left, x)
+            if (!leftEquation.contains("x")) {
+                leftEquation = calculateMonkeyWithId(left).toString()
             }
+            var rightEquation = if (right == x) "x" else buildEquationForMonkeyWithId(right, x)
+            if (!rightEquation.contains("x")) {
+                rightEquation = calculateMonkeyWithId(right).toString()
+            }
+
+            return "($leftEquation ${monkey.operation!!} $rightEquation)"
         }
 
         companion object {
@@ -71,13 +54,6 @@ object Day21 {
                     input.map { line ->
                         val monkey = Monkey.parse(line)
                         allMonkeys[monkey.id] = monkey
-
-                        if (monkey.value != null) {
-                            monkeysWithKnownValues[monkey.id] = monkey
-                        }
-                        else {
-                            monkeysWithUnknownValues[monkey.id] = monkey
-                        }
                     }
                 }
             }
@@ -85,11 +61,6 @@ object Day21 {
     }
 
     class Monkey(val id: String, var value: Long?, var operation: Char?, val waitFor: Pair<String, String>?) {
-        private val initialValue: Long? = value
-
-        fun reset() {
-            value = initialValue
-        }
 
         companion object {
             fun parse(input: String): Monkey {
@@ -109,33 +80,19 @@ object Day21 {
     fun part1(input: List<String>): Long {
         val calculator = RootCalculator.parse(input)
 
-        calculator.resolveEquations()
-
-        return calculator.valueOf("root")!!
+        return calculator.calculateMonkeyWithId("root")
     }
 
     fun part2(input: List<String>): Long {
         val calculator = RootCalculator.parse(input)
 
-        calculator.monkeysWithUnknownValues["root"]!!.operation = '='
-        var humanCounter = -1L
+        calculator.allMonkeys["root"]!!.operation = '='
+        val (left, right) = calculator.allMonkeys["root"]!!.waitFor!!
 
-        while(true) {
-            calculator.resetMonkeys()
-            calculator.monkeysWithUnknownValues.remove("humn") // remove human counter if its existing in monkeys
-            calculator.monkeysWithKnownValues["humn"]!!.value = ++humanCounter
+        val leftEq = calculator.buildEquationForMonkeyWithId(left, "humn")
+        val rightEq = calculator.buildEquationForMonkeyWithId(right, "humn")
 
-            if (humanCounter % 1000 == 0L) {
-                println("Trying $humanCounter")
-            }
-
-            calculator.resolveEquations()
-
-            if (calculator.valueOf("root") == 1L) {
-                break
-            }
-        }
-
-        return humanCounter
+        val e = Expression("solve ( ($leftEq - $rightEq), x, 0, ${Long.MAX_VALUE})")
+        return e.calculate().roundToLong()
     }
 }
