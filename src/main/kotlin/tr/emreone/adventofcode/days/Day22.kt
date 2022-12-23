@@ -71,7 +71,7 @@ object Day22 {
         return 0
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: String): Int {
 
         return 0
     }

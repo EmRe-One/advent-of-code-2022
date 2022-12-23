@@ -34,6 +34,7 @@ You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle
 | [Day 20](https://adventofcode.com/2022/day/20) | [Day20Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day20Test.kt) | [Day20.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day20.kt) | ![Day 20](./aoc_tiles/20.png) |
 | [Day 21](https://adventofcode.com/2022/day/21) | [Day21Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day21Test.kt) | [Day21.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day21.kt) | ![Day 21](./aoc_tiles/21.png) |
 | [Day 22](https://adventofcode.com/2022/day/22) | [Day22Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day22Test.kt) | [Day22.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day22.kt) | ![Day 22](./aoc_tiles/22.png) |
+| [Day 23](https://adventofcode.com/2022/day/23) | [Day23Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day23Test.kt) | [Day23.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day23.kt) | ![Day 23](./aoc_tiles/23.png) |
 <!-- $1 -->
 
 ---
