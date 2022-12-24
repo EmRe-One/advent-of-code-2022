@@ -20,7 +20,7 @@ object Day20 {
                     i = newI
                 }
             }
-            
+
             val indexOfZero = this.numbers.indexOfFirst { it.value == 0L }
 
             return (indexOfZero..(indexOfZero + 3000) step 1000).sumOf {

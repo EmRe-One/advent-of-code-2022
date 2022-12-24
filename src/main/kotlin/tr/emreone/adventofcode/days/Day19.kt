@@ -1,7 +1,5 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.debugLogger
-import tr.emreone.utils.Logger.logger
 import java.util.*
 import kotlin.collections.ArrayDeque
 
@@ -195,7 +193,7 @@ object Day19 {
 
         val scores = blueprints.map { it.maxGeodeProduction(minutes) }
 
-        // 4712
+
         return scores.reduce { a, b -> a * b }
     }
 }
