@@ -1,78 +1,52 @@
 package tr.emreone.adventofcode.days
 
+import java.util.Collections.swap
+import kotlin.math.abs
+
 object Day20 {
 
-    data class MovableIndex(val steps: Long, val sortIndex: Int) {}
+    class Shuffler(val numbers: MutableList<IndexedValue<Long>>) {
 
-    fun part1(input: List<String>): Long {
-        val indices = input.mapIndexed { index, line ->
-            MovableIndex(line.toLong(), index)
-        }.toMutableList()
+        fun shuffle(times: Int, decryptKey: Long = 1L): Long {
+            val size = numbers.size
 
-        val total = indices.size.toLong()
-        for (i in 0 until total) {
-            val elemIndex = indices.indexOfFirst { it.sortIndex.toLong() == i }
-            val elem = indices[elemIndex]
+            for(index in 0 until (size * times)) {
+                var i = this.numbers.indexOfFirst { it.index == index % size }
+                val v  = (this.numbers[i].value * decryptKey % (size - 1)).toInt()
 
-            /*val newIndex = when {
-                elemIndex + elem.steps < 0L -> {
-                    // move to the end
-                    var index = elemIndex + elem.steps + total
-                    while(index !in 0 until total) {
-                        index += total
-                    }
-                    index
-                }
-                elemIndex + elem.steps >= total -> {
-                    // move to the beginning
-                    var index = elemIndex + elem.steps - total
-                    while(index !in 0 until total) {
-                        index -= total
-                    }
-                    index
-                }
-                elemIndex + elem.steps == 0L -> {
-                    total - 1
-                }
-                else -> {
-                    elemIndex + elem.steps
-                }
-            }*/
-
-            var newIndex = elemIndex + elem.steps
-            while (newIndex !in 0 until total) {
-                newIndex = if (newIndex < 0) {
-                    // move to the end
-                    elemIndex + elem.steps + total
-                } else {
-                    // move to the beginning
-                    elemIndex + elem.steps - total
+                repeat(abs(v)) {
+                    val newI = (i + v / abs(v)).mod(size)
+                    swap(this.numbers, i, newI)
+                    i = newI
                 }
             }
+            
+            val indexOfZero = this.numbers.indexOfFirst { it.value == 0L }
 
-            if (newIndex < elemIndex) {
-                indices.add(newIndex.toInt(), elem)
-                indices.removeAt(elemIndex + 1)
-            } else {
-                indices.add(newIndex.toInt() + 1, elem)
-                indices.removeAt(elemIndex)
+            return (indexOfZero..(indexOfZero + 3000) step 1000).sumOf {
+                this.numbers[it % size].value * decryptKey
             }
         }
 
-        var countingIndex = indices.indexOfFirst { it.steps == 0L }.toLong()
-        println("countingIndex: $countingIndex")
-        var sum = 0L
-        repeat(3) {
-            countingIndex = (countingIndex + 1000L) % total
-            sum += indices[countingIndex.toInt()].steps
-            println("countingIndex: $countingIndex, sum: $sum")
-        }
+        companion object {
+            fun parse(input: List<String>): Shuffler {
+                val list = input
+                    .map { it.toLong() }
+                    .withIndex()
+                    .toMutableList()
 
-        return sum
+                return Shuffler(list)
+            }
+        }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part1(input: List<String>): Long {
+        val shuffler = Shuffler.parse(input)
+        return shuffler.shuffle(1)
+    }
 
-        return 0
+    fun part2(input: List<String>): Long {
+        val shuffler = Shuffler.parse(input)
+        return shuffler.shuffle(10, 811_589_153L)
     }
 }

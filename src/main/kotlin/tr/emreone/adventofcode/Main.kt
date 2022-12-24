@@ -319,7 +319,7 @@ class Solutions {
         logger.info { part1 }
 
         val (part2, elapsedTime2) = measureTimedValue {
-            Day19.part2(input)
+            Day19.part2(input, 32, 3)
         }
         logger.info { "Part2 solved in $elapsedTime2:" }
         logger.info { part2 }
@@ -390,7 +390,7 @@ class Solutions {
 
 fun main() {
     val solution = Solutions()
-    val day = 22
+    val day = 20
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Solving Puzzles for Day $dayString: " }
 

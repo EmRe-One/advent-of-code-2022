@@ -1,6 +1,9 @@
 package tr.emreone.adventofcode.days
 
+import tr.emreone.utils.Logger.debugLogger
 import tr.emreone.utils.Logger.logger
+import java.util.*
+import kotlin.collections.ArrayDeque
 
 object Day19 {
 
@@ -10,90 +13,141 @@ object Day19 {
     val PATTERN_OBSIDIAN_ROBOT = """Each obsidian robot costs (\d+) ore and (\d+) clay.""".toRegex()
     val PATTERN_GEODE_ROBOT = """Each geode robot costs (\d+) ore and (\d+) obsidian.""".toRegex()
 
-    enum class MATERIAL {
-        ORE, CLAY, OBSIDIAN, GEODE
+    enum class MATERIAL(val index: Int) {
+        ORE(0),
+        CLAY(1),
+        OBSIDIAN(2),
+        GEODE(3)
     }
 
-    class Robot(val material: MATERIAL) {
+    class Robot() {
         var oreCost = 0
         var clayCost = 0
         var obsidianCost = 0
     }
 
-    class Blueprint(val id: Int) {
-        val robotPriceTable = mutableMapOf<MATERIAL, Robot>()
-        var maxProduction = 0
-
-        fun maxGeodeProduction(
-            collectedMaterials: MutableMap<MATERIAL, Int> = MATERIAL.values().associateWith { 0 }.toMutableMap(),
-            robots: MutableMap<MATERIAL, Int> = MATERIAL.values().associateWith { if (it == MATERIAL.ORE) 1 else 0 }.toMutableMap(),
-            timeLeft: Int
-        ): Int {
-
-            if (timeLeft == 0) {
-                if (collectedMaterials[MATERIAL.GEODE]!! > maxProduction) {
-                    maxProduction = collectedMaterials[MATERIAL.GEODE]!!
-                    logger.info { "New max production: $maxProduction" }
-                }
-                return collectedMaterials[MATERIAL.GEODE]!!
-            }
-
-            // if we can not produce in best-case enough geode to beat the current max, then return
-            var geodeRessource = collectedMaterials[MATERIAL.GEODE]!!
-            var geodeRobots = robots[MATERIAL.GEODE]!!
-            (timeLeft downTo 0).forEach {
-                geodeRessource += geodeRobots
-                geodeRobots += 1
-            }
-            if (geodeRessource < maxProduction) {
-                return 0
-            }
-
-            var bestProduction = 0
-
-            // check if we can build robot and compare production with and without building robot
-            MATERIAL.values().reversed().forEach {
-                val robot = robotPriceTable[it]!!
-
-                if (canBuild(robot, collectedMaterials)) {
-                    collectedMaterials[MATERIAL.ORE] = collectedMaterials[MATERIAL.ORE]!! - robot.oreCost
-                    collectedMaterials[MATERIAL.CLAY] = collectedMaterials[MATERIAL.CLAY]!! - robot.clayCost
-                    collectedMaterials[MATERIAL.OBSIDIAN] = collectedMaterials[MATERIAL.OBSIDIAN]!! - robot.obsidianCost
-                    robots.forEach { (type, count) ->
-                        collectedMaterials[type] = collectedMaterials[type]!! + count
-                    }
-                    robots[it] = robots[it]!! + 1
-
-                    val production = maxGeodeProduction(collectedMaterials.toMutableMap(), robots.toMutableMap(), timeLeft - 1)
-
-                    if (production > bestProduction) {
-                        bestProduction = production
-                    }
-
-                    // revert changes
-                    robots[it] = robots[it]!! - 1
-                    robots.forEach { (type, count) ->
-                        collectedMaterials[type] = collectedMaterials[type]!! - count
-                    }
-                    collectedMaterials[MATERIAL.ORE] = collectedMaterials[MATERIAL.ORE]!! + robot.oreCost
-                    collectedMaterials[MATERIAL.CLAY] = collectedMaterials[MATERIAL.CLAY]!! + robot.clayCost
-                    collectedMaterials[MATERIAL.OBSIDIAN] = collectedMaterials[MATERIAL.OBSIDIAN]!! + robot.obsidianCost
-                }
-            }
-
-            val production = maxGeodeProduction(collectedMaterials.toMutableMap(), robots.toMutableMap(), timeLeft - 1)
-
-            if (production > bestProduction) {
-                bestProduction = production
-            }
-
-            return bestProduction
+    data class State(
+        var materials: MutableList<Int> = mutableListOf(0, 0, 0, 0),
+        var robots: MutableList<Int> = mutableListOf(1, 0, 0, 0),
+        var timeLeft: Int
+    ): Comparable<State> {
+        override fun compareTo(other: State): Int {
+            return compareValuesBy(this, other) { it.score() }
         }
 
-        private fun printPortmonnaie(collectedMaterials: Map<MATERIAL, Int>) {
-            collectedMaterials.forEach{ (type, count) ->
-                logger.info { "\tCollected $count $type" }
+        fun tick(): State {
+            this.robots.forEachIndexed { index, count ->
+                this.materials[index] += count
             }
+            this.timeLeft--
+            return this
+        }
+
+        private fun score(): Int {
+            return this.robots.sum()
+        }
+
+        fun isBetterThan(other: State): Boolean {
+            return this.materials.zip(other.materials).all { (a, b) -> a >= b }
+                    && this.robots.zip(other.robots).all { (a, b) -> a >= b }
+        }
+
+        fun copy(): State {
+            return State(this.materials.toMutableList(), this.robots.toMutableList(), this.timeLeft)
+        }
+    }
+
+
+    class Blueprint(val id: Int) {
+        val robotPriceTable = mutableListOf<Robot>(Robot(), Robot(), Robot(), Robot())
+        var maxProduction = 0
+
+        fun maxGeodeProduction(initialTimeLeft: Int): Int {
+            val queue = ArrayDeque<State>()
+            queue.add(State(timeLeft = initialTimeLeft))
+
+            val bestRobots = PriorityQueue<State>()
+            val visited: MutableSet<State> = mutableSetOf()
+
+            fun addState(state: State) {
+                if (state in visited)
+                    return
+                visited.add(state)
+                for (robot in bestRobots) {
+                    if (robot.isBetterThan(state))
+                        return
+                }
+                bestRobots.add(state)
+                if (bestRobots.size > 1000){
+                    bestRobots.poll()
+                }
+
+                queue.add(state)
+            }
+
+            while (queue.isNotEmpty()) {
+                val state = queue.removeFirst()
+                val stateAfterOneMinute = state.copy().tick()
+
+                // if time is over, remember the best geodeProduction
+                if (stateAfterOneMinute.timeLeft == 0) {
+                    if (stateAfterOneMinute.materials[MATERIAL.GEODE.index] > this.maxProduction) {
+                        this.maxProduction = stateAfterOneMinute.materials[MATERIAL.GEODE.index]
+                    }
+                    continue
+                }
+
+                // if we can produce a geode-robot, do it
+                if (this.canBuildForState(state, MATERIAL.GEODE)) {
+                    val newState = stateAfterOneMinute.copy().also {
+                        it.materials[MATERIAL.ORE.index] -= this.robotPriceTable[MATERIAL.GEODE.index].oreCost
+                        it.materials[MATERIAL.OBSIDIAN.index] -= this.robotPriceTable[MATERIAL.GEODE.index].obsidianCost
+                        it.robots[MATERIAL.GEODE.index] += 1
+                    }
+                    addState(newState)
+                }
+                // if we can produce an obsidian-robot, do it
+                else if (this.canBuildForState(state, MATERIAL.OBSIDIAN)) {
+
+                    val newState = stateAfterOneMinute.copy().also {
+                        it.materials[MATERIAL.ORE.index] -= this.robotPriceTable[MATERIAL.OBSIDIAN.index].oreCost
+                        it.materials[MATERIAL.CLAY.index] -= this.robotPriceTable[MATERIAL.OBSIDIAN.index].clayCost
+                        it.robots[MATERIAL.OBSIDIAN.index] += 1
+                    }
+                    addState(newState)
+                }
+                // if we can produce a clay, do it
+                else {
+                    if (this.canBuildForState(state, MATERIAL.CLAY)) {
+                        val newState = stateAfterOneMinute.copy().also {
+                            it.materials[MATERIAL.ORE.index] -= this.robotPriceTable[MATERIAL.CLAY.index].oreCost
+                            it.robots[MATERIAL.CLAY.index] += 1
+                        }
+                        addState(newState)
+                    }
+                    // if we can produce an ore, do it
+                    if (this.canBuildForState(state, MATERIAL.ORE)) {
+                        val newState = stateAfterOneMinute.copy().also {
+                            it.materials[MATERIAL.ORE.index] -= this.robotPriceTable[MATERIAL.ORE.index].oreCost
+                            it.robots[MATERIAL.ORE.index] += 1
+                        }
+                        addState(newState)
+                    }
+                }
+
+                // the case if we can produce nothing :D
+                addState(stateAfterOneMinute.copy())
+            }
+
+            return this.maxProduction
+        }
+
+        private fun canBuildForState(state: State, robotForMaterial: MATERIAL): Boolean {
+            val robot = this.robotPriceTable[robotForMaterial.index]
+
+            return state.materials[MATERIAL.ORE.index] >= robot.oreCost
+                    && state.materials[MATERIAL.CLAY.index] >= robot.clayCost
+                    && state.materials[MATERIAL.OBSIDIAN.index] >= robot.obsidianCost
         }
 
         companion object {
@@ -101,28 +155,22 @@ object Day19 {
                 val blueprintId = PATTERN_BLUEPRINT_ID.find(line)!!.destructured.component1().toInt()
                 val blueprint = Blueprint(blueprintId)
                 // Ore Robot
-                blueprint.robotPriceTable[MATERIAL.ORE] = Robot(MATERIAL.ORE).also {
+                blueprint.robotPriceTable[MATERIAL.ORE.index].also {
                     it.oreCost = PATTERN_ORE_ROBOT.find(line)!!.destructured.component1().toInt()
                 }
                 // Clay Robot
-                blueprint.robotPriceTable[MATERIAL.CLAY] = Robot(MATERIAL.CLAY).also {
+                blueprint.robotPriceTable[MATERIAL.CLAY.index].also {
                     it.oreCost = PATTERN_CLAY_ROBOT.find(line)!!.destructured.component1().toInt()
                 }
-                blueprint.robotPriceTable[MATERIAL.OBSIDIAN] = Robot(MATERIAL.OBSIDIAN).also {
+                blueprint.robotPriceTable[MATERIAL.OBSIDIAN.index].also {
                     it.oreCost = PATTERN_OBSIDIAN_ROBOT.find(line)!!.destructured.component1().toInt()
                     it.clayCost = PATTERN_OBSIDIAN_ROBOT.find(line)!!.destructured.component2().toInt()
                 }
-                blueprint.robotPriceTable[MATERIAL.GEODE] = Robot(MATERIAL.GEODE).also {
+                blueprint.robotPriceTable[MATERIAL.GEODE.index].also {
                     it.oreCost = PATTERN_GEODE_ROBOT.find(line)!!.destructured.component1().toInt()
                     it.obsidianCost = PATTERN_GEODE_ROBOT.find(line)!!.destructured.component2().toInt()
                 }
                 return blueprint
-            }
-
-            private fun canBuild(robot: Robot, collectedMaterials: Map<MATERIAL, Int>): Boolean {
-                return collectedMaterials[MATERIAL.ORE]!! >= robot.oreCost
-                        && collectedMaterials[MATERIAL.CLAY]!! >= robot.clayCost
-                        && collectedMaterials[MATERIAL.OBSIDIAN]!! >= robot.obsidianCost
             }
         }
     }
@@ -131,17 +179,23 @@ object Day19 {
         val blueprints = input.map { Blueprint.parse(it) }
 
         val scores = blueprints.map { blueprint ->
-            blueprint.id to blueprint.maxGeodeProduction(timeLeft = minutes)
+            blueprint.id to blueprint.maxGeodeProduction(minutes)
         }
 
         return scores.sumOf {
-            logger.info { "Blueprint ${it.first} produces ${it.second} geodes" }
+            // logger.info { "Blueprint ${it.first} produces ${it.second} geodes" }
             it.first * it.second
         }
     }
 
-    fun part2(input: List<String>): Int {
+    fun part2(input: List<String>, minutes: Int, noOfElephants: Int, startIndex: Int = 0): Int {
+        val blueprints = input.map { Blueprint.parse(it) }
+            .drop(startIndex)
+            .slice(0 until noOfElephants)
 
-        return 0
+        val scores = blueprints.map { it.maxGeodeProduction(minutes) }
+
+        // 4712
+        return scores.reduce { a, b -> a * b }
     }
 }
