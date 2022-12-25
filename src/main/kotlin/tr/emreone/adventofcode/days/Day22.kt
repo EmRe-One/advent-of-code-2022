@@ -188,7 +188,7 @@ object Day22 {
         return board.calculatePassword()
     }
 
-    fun part2(input: String, cubeSize: Int): Long {
+    fun part2(input: String, cubeSize: Int = 50): Long {
         val (inputBoard, walkCommands) = input.split("\n\n")
 
         val board = Board.parseMap(inputBoard.lines())

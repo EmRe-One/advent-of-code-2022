@@ -1,5 +1,6 @@
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.6.0"
+    application
 }
 
 group = "tr.emreone.adventofcode"
@@ -17,6 +18,7 @@ fun getValue(key: String, filename: String = "keys.properties"): String {
     return items[key]?: throw IllegalArgumentException("Key $key not found")
 }
 
+
 repositories {
     mavenCentral()
     maven {
@@ -30,13 +32,20 @@ repositories {
 
 dependencies {
     implementation(kotlin("stdlib"))
+    implementation(kotlin("reflect"))
+
     implementation("org.slf4j:slf4j-api:2.0.5")
     implementation("ch.qos.logback:logback-classic:1.4.5")
     implementation("ch.qos.logback:logback-core:1.4.5")
     implementation("io.github.microutils:kotlin-logging-jvm:3.0.4")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
     implementation("org.mariuszgromada.math:MathParser.org-mXparser:5.1.0")
+
+    implementation("org.reflections:reflections:0.10.2")
+    implementation("com.github.ajalt.mordant:mordant:2.0.0-beta7")
+
     implementation("tr.emreone:kotlin-utils:0.2.0")
+
     testImplementation(kotlin("test"))
 }
 
@@ -55,7 +64,6 @@ tasks {
         gradleVersion = "7.5.1"
     }
 }
-
 
 tasks.register("prepareNextDay") {
     var day = 0
@@ -135,8 +143,3 @@ tasks.register("prepareNextDay") {
         }
     }
 }
-
-
-// tasks.register("aoc") {
-//     this.dependsOn("prepareNextDay")
-// }

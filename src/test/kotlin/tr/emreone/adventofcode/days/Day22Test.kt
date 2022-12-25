@@ -15,7 +15,7 @@ internal class Day22Test {
     @Test
     fun part2() {
         val input = Resources.resourceAsText("day22_example.txt")
-        assertEquals(5031, Day22.part2(input), "Day22, Part2 should be 5031.")
+        assertEquals(5031, Day22.part2(input, 4), "Day22, Part2 should be 5031.")
     }
 
 }

@@ -1,6 +1,6 @@
 ![Kotlin](https://img.shields.io/badge/Kotlin-grey?logo=Kotlin&style=for-the-badge)
-![](https://img.shields.io/badge/📅%20days-21-005060?style=for-the-badge)
-![](https://img.shields.io/badge/⭐%20stars-38-005060?style=for-the-badge)
+![](https://img.shields.io/badge/📅%20days-25-005060?style=for-the-badge)
+![](https://img.shields.io/badge/⭐%20stars-50-005060?style=for-the-badge)
 
 # Advent-of-Code 2022
 
@@ -35,6 +35,8 @@ You can find here my [Advent-of-Code 2022](https://adventofcode.com/2022) puzzle
 | [Day 21](https://adventofcode.com/2022/day/21) | [Day21Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day21Test.kt) | [Day21.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day21.kt) | ![Day 21](./aoc_tiles/21.png) |
 | [Day 22](https://adventofcode.com/2022/day/22) | [Day22Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day22Test.kt) | [Day22.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day22.kt) | ![Day 22](./aoc_tiles/22.png) |
 | [Day 23](https://adventofcode.com/2022/day/23) | [Day23Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day23Test.kt) | [Day23.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day23.kt) | ![Day 23](./aoc_tiles/23.png) |
+| [Day 24](https://adventofcode.com/2022/day/24) | [Day24Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day24Test.kt) | [Day24.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day24.kt) | ![Day 24](./aoc_tiles/24.png) |
+| [Day 25](https://adventofcode.com/2022/day/25) | [Day25Test.kt](./src/test/kotlin/tr/emreone/adventofcode/days/Day25Test.kt) | [Day25.kt](./src/main/kotlin/tr/emreone/adventofcode/days/Day25.kt) | ![Day 25](./aoc_tiles/25.png) |
 <!-- $1 -->
 
 ---

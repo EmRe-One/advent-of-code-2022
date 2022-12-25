@@ -384,13 +384,37 @@ class Solutions {
         logger.info { "Part2 solved in $elapsedTime2:" }
         logger.info { part2 }
     }
+    fun solveDay24() {
+        val input = Resources.resourceAsList(fileName = "day24.txt")
+
+        val (part1, elapsedTime1) = measureTimedValue {
+            Day24.part1(input)
+        }
+        logger.info { "Part1 solved in $elapsedTime1:" }
+        logger.info { part1 }
+
+        val (part2, elapsedTime2) = measureTimedValue {
+            Day24.part2(input)
+        }
+        logger.info { "Part2 solved in $elapsedTime2:" }
+        logger.info { part2 }
+    }
+    fun solveDay25() {
+        val input = Resources.resourceAsList(fileName = "day25.txt")
+
+        val (part1, elapsedTime1) = measureTimedValue {
+            Day25.part1(input)
+        }
+        logger.info { "Part1 solved in $elapsedTime1:" }
+        logger.info { part1 }
+    }
 // $1
 
 }
 
 fun main() {
     val solution = Solutions()
-    val day = 22
+    val day = 25
     val dayString = day.toString().padStart(2, '0')
     logger.info { "Solving Puzzles for Day $dayString: " }
 

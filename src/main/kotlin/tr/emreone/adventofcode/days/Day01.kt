@@ -10,7 +10,7 @@ object Day01 {
     }
 
     fun part1(input: String): Int {
-        return collectCaloriesOfElves(input).max()
+        return collectCaloriesOfElves(input).maxOf { it }
     }
 
     fun part2(input: String): Int {
