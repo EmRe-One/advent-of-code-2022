@@ -1,12 +1,13 @@
 plugins {
-    kotlin("jvm") version "1.6.0"
+    kotlin("jvm") version "1.9.20"
+    kotlin("plugin.serialization") version "1.9.20"
     application
 }
 
 group = "tr.emreone.adventofcode"
 version = "2022"
 
-fun getValue(key: String, filename: String = "keys.properties"): String {
+fun getValue(key: String, filename: String = "../keys.properties"): String {
     val items = HashMap<String, String>()
     val f = File(filename)
 
@@ -18,6 +19,10 @@ fun getValue(key: String, filename: String = "keys.properties"): String {
     return items[key]?: throw IllegalArgumentException("Key $key not found")
 }
 
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+}
 
 repositories {
     mavenCentral()
@@ -43,8 +48,9 @@ dependencies {
 
     implementation("org.reflections:reflections:0.10.2")
     implementation("com.github.ajalt.mordant:mordant:2.0.0-beta7")
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2")
 
-    implementation("tr.emreone:kotlin-utils:0.2.0")
+    implementation("tr.emreone:kotlin-utils:0.2.2")
 
     testImplementation(kotlin("test"))
 }
