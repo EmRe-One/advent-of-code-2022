@@ -113,7 +113,7 @@ fun Tower.simulate(rockCount: Int, multiply: Long = 1L): Tower {
 }
 
 fun main() {
-    input = Resources.resourceAsText(fileName = "day17.txt").map { if (it == '>') 1 else -1 }
+/*    input = Resources.resourceAsText(fileName = "day17.txt").map { if (it == '>') 1 else -1 }
     Tower().simulate(2022).towerHeight.run(::println)
 
     val forOcc = Tower()
@@ -149,5 +149,5 @@ fun main() {
                 .run { println(this.towerHeight) }
             break
         }
-    }
+    }*/
 }
