@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Resources
+import tr.emreone.kotlin_utils.Resources
 
 val rocks = "@@@@  .@. @@@ .@.  ..@ ..@ @@@  @ @ @ @  @@ @@".split("  ").map { it.split(" ") }
 var input: List<Int> = listOf()

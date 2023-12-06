@@ -1,7 +1,7 @@
 package tr.emreone.adventofcode
 
-import tr.emreone.adventofcode.utils.lcm
-import tr.emreone.utils.Resources
+import tr.emreone.kotlin_utils.lcm
+import tr.emreone.kotlin_utils.Resources
 
 typealias Point = Pair<Int, Int>
 

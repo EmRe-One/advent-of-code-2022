@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
+import tr.emreone.kotlin_utils.Logger.logger
 
 object Day17 {
     private val CHAMBER_WIDTH = 7

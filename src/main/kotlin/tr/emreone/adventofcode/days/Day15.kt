@@ -2,8 +2,8 @@ package tr.emreone.adventofcode.days
 
 import kotlinx.coroutines.*
 import tr.emreone.adventofcode.manhattanDistanceTo
-import tr.emreone.utils.Logger.logger
-import tr.emreone.utils.math.Point2D
+import tr.emreone.kotlin_utils.Logger.logger
+import tr.emreone.kotlin_utils.math.Point2D
 import kotlin.math.abs
 
 object Day15 {

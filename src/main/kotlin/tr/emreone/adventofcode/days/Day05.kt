@@ -1,7 +1,7 @@
 package tr.emreone.adventofcode.days
 
 import tr.emreone.adventofcode.readTextGroups
-import tr.emreone.utils.Logger.logger
+import tr.emreone.kotlin_utils.Logger.logger
 import java.util.Stack
 
 object Day05 {

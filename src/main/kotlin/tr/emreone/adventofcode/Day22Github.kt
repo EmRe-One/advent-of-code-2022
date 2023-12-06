@@ -1,13 +1,11 @@
 package tr.emreone.adventofcode
 
-import tr.emreone.adventofcode.utils.dim3d.Point3D
-import tr.emreone.adventofcode.utils.dim3d.unaryMinus
-import tr.emreone.adventofcode.utils.*
-import tr.emreone.adventofcode.utils.Direction4.Companion.DOWN
-import tr.emreone.adventofcode.utils.Direction4.Companion.LEFT
-import tr.emreone.adventofcode.utils.Direction4.Companion.RIGHT
-import tr.emreone.adventofcode.utils.Direction4.Companion.UP
-import tr.emreone.adventofcode.utils.dim3d.*
+import tr.emreone.kotlin_utils.Direction4.Companion.DOWN
+import tr.emreone.kotlin_utils.Direction4.Companion.LEFT
+import tr.emreone.kotlin_utils.Direction4.Companion.RIGHT
+import tr.emreone.kotlin_utils.Direction4.Companion.UP
+import tr.emreone.kotlin_utils.*
+import tr.emreone.kotlin_utils.dim3d.*
 
 const val OPEN = '.'
 const val WALL = '#'
@@ -205,26 +203,28 @@ class CubeOrigami(val paper: Grid<Char>) : Grid<Char> by paper {
 
         val base = folding.indexOfOrNull(toFaceId)!! * faceDimension
 
-        return (base + with(facePos) {when (heading to rotHeading) {
-            DOWN to DOWN -> x to 0
-            UP to UP -> x to last
-            LEFT to LEFT -> last to y
-            RIGHT to RIGHT -> 0 to y
+        return (base + with(facePos) {
+            when (heading to rotHeading) {
+                DOWN to DOWN -> x to 0
+                UP to UP -> x to last
+                LEFT to LEFT -> last to y
+                RIGHT to RIGHT -> 0 to y
 
-            RIGHT to UP -> y to last
-            RIGHT to DOWN -> last - y to 0
-            RIGHT to LEFT -> last to last - y
+                RIGHT to UP -> y to last
+                RIGHT to DOWN -> last - y to 0
+                RIGHT to LEFT -> last to last - y
 
-            DOWN to UP -> last - x to last
-            DOWN to LEFT -> last to x
+                DOWN to UP -> last - x to last
+                DOWN to LEFT -> last to x
 
-            LEFT to RIGHT -> 0 to last - y
-            LEFT to DOWN -> y to 0
+                LEFT to RIGHT -> 0 to last - y
+                LEFT to DOWN -> y to 0
 
-            UP to RIGHT -> 0 to x
+                UP to RIGHT -> 0 to x
 
-            else -> error("unsupported rotation $heading to $rotHeading (x $rot)")
-        }} to rotHeading)
+                else -> error("unsupported rotation $heading to $rotHeading (x $rot)")
+            }
+        } to rotHeading)
 
         return (base + when (rot) {
 //            0 -> when (heading) {

@@ -1,8 +1,7 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
-import tr.emreone.utils.math.Point2D
-import java.lang.Long
+import tr.emreone.kotlin_utils.Logger.logger
+import tr.emreone.kotlin_utils.math.Point2D
 import java.lang.StringBuilder
 
 object Day14 {
@@ -57,10 +56,10 @@ object Day14 {
             this.terrainMap[point] = elem
 
             // adjust boundaries
-            this.xMin = Long.min(this.xMin, point.x)
-            this.xMax = Long.max(this.xMax, point.x)
-            this.yMin = Long.min(this.yMin, point.y)
-            this.yMax = Long.max(this.yMax, point.y)
+            this.xMin = minOf(this.xMin, point.x)
+            this.xMax = maxOf(this.xMax, point.x)
+            this.yMin = minOf(this.yMin, point.y)
+            this.yMax = maxOf(this.yMax, point.y)
         }
 
         private fun getElemAtPoint(point: Point2D): MapElem {

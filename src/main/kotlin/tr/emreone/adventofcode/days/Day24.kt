@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.math.Point2D
+import tr.emreone.kotlin_utils.math.Point2D
 
 object Day24 {
 

@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
+import tr.emreone.kotlin_utils.Logger.logger
 import java.lang.StringBuilder
 
 object Day10 {

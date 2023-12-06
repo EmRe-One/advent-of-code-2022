@@ -1,7 +1,6 @@
 package tr.emreone.adventofcode
 
-import tr.emreone.adventofcode.utils.*
-import utils.KPixelGameEngine
+import tr.emreone.kotlin_utils.*
 import java.awt.Color
 
 fun main() {

@@ -1,7 +1,7 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
-import tr.emreone.utils.math.Point3D
+import tr.emreone.kotlin_utils.Logger.logger
+import tr.emreone.kotlin_utils.math.Point3D
 import java.util.*
 import kotlin.math.min
 import kotlin.math.max

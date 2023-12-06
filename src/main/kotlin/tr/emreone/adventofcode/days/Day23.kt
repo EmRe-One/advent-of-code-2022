@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Resources
+import tr.emreone.kotlin_utils.Resources
 
 typealias Point = Pair<Int, Int>
 

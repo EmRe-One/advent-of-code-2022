@@ -1,5 +1,3 @@
-@file:Suppress("unused")
-
 package tr.emreone.adventofcode
 
 import com.github.ajalt.mordant.rendering.TextColors.*
@@ -26,7 +24,7 @@ import kotlin.time.Duration.Companion.seconds
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
 import kotlin.time.toJavaDuration
-import tr.emreone.utils.Resources
+import tr.emreone.kotlin_utils.Resources
 
 const val FAST_MODE = false
 

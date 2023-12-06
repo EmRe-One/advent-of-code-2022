@@ -1,7 +1,7 @@
 package tr.emreone.adventofcode.days
 
-import tr.emreone.utils.Logger.logger
-import tr.emreone.utils.extensions.times
+import tr.emreone.kotlin_utils.Logger.logger
+import tr.emreone.kotlin_utils.extensions.times
 
 object Day07 {
 

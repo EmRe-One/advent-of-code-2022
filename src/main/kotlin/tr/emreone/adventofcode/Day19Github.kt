@@ -1,6 +1,6 @@
 package tr.emreone.adventofcode
 
-import tr.emreone.adventofcode.utils.product
+import tr.emreone.kotlin_utils.product
 import kotlin.math.min
 
 class Day19Github : Day(19, 2022, "Not Enough Minerals") {
