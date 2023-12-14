@@ -575,7 +575,7 @@ class AoCWebInterface(private val sessionCookie: String?) {
 
         fun FQD.toUri() = "$BASE_URL/$year/day/$day"
 
-        private fun String.urlEncode() = URLEncoder.encode(this, Charsets.UTF_8)
+        private fun String.urlEncode() = URLEncoder.encode(this, Charsets.UTF_8.toString())
     }
 
     fun downloadInput(fqd: FQD): Result<List<String>> = runCatching {
